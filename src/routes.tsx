@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom'
 import LoginPage from './pages/LoginPage'
+import UserListPage from './pages/users/UserListPage'
 
 export const router = createBrowserRouter([
 	{
@@ -9,5 +10,9 @@ export const router = createBrowserRouter([
 	{
 		path: '/app',
 		element: <h1>hello</h1>,
+	},
+	{
+		path: '/users',
+		element: <UserListPage />,
 	},
 ])
