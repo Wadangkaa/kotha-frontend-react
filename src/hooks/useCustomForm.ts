@@ -15,9 +15,8 @@ type ErrorResponse = {
 
 export type ApiResponse<T> = {
 	data: T
-	statusCode: number
+	status: number
 	message: string
-	success: boolean
 }
 
 export const useCustomForm = <T extends FieldValues>(options = {}) => {
