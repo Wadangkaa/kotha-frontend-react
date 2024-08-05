@@ -32,7 +32,7 @@ const LoginPage = () => {
 			<div className='mt-20 mb-20'>
 				<form
 					className='max-w-md mx-auto p-4 bg-white border border-gray-200'
-					onSubmit={handleSubmit(onSubmit)}
+					onSubmit={ handleSubmit(onSubmit) }
 					noValidate
 				>
 					<h2 className='text-2xl mb-8 font-semibold text-center'>
@@ -41,21 +41,21 @@ const LoginPage = () => {
 					<Input
 						type='email'
 						placeholder='Email'
-						{...register('email')}
-						error={errors.email}
+						{ ...register('email') }
+						error={ errors.email }
 					/>
 					<Input
 						type='password'
 						placeholder='Password'
-						{...register('password')}
-						error={errors.password}
+						{ ...register('password') }
+						error={ errors.password }
 					/>
 					<Checkbox id='remember-me' />
 					<Label htmlFor='remember-me'>Remember me</Label>
 					<Button className='w-full'>Login</Button>
 				</form>
 
-				<DevTool control={control} />
+				<DevTool control={ control } />
 			</div>
 		</>
 	)
