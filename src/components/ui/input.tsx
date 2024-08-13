@@ -1,31 +1,35 @@
-import * as React from 'react'
+import * as React from "react"
 
-import { cn } from '@/lib/utils'
-import { FieldError } from 'react-hook-form'
+import { cn } from "@/lib/utils"
+import { FieldError } from "react-hook-form"
 
 export interface InputProps
-	extends React.InputHTMLAttributes<HTMLInputElement> {
-	error?: FieldError
+  extends React.InputHTMLAttributes<HTMLInputElement> {
+  error: FieldError | undefined
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-	({ className, type, error, ...props }, ref) => {
-		return (
-			<div className='mb-2'>
-				<input
-					type={ type }
-					className={ cn(
-						`flex  h-9 w-full rounded-md border ${error ? 'border-red-500 ' : 'border-input focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'} bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50`,
-						className
-					) }
-					ref={ ref }
-					{ ...props }
-				/>
-				{ error && <p className='text-red-500'>{ error.message }</p> }
-			</div>
-		)
-	}
+  ({ className, type, error, ...props }, ref) => {
+    return (
+      <div className="tw-mb-2">
+        <input
+          type={ type }
+          className={ cn(
+            "tw-flex tw-h-9 tw-w-full tw-rounded-md tw-border tw-border-input tw-bg-transparent tw-px-3 tw-py-1 tw-text-sm tw-shadow-sm tw-transition-colors file:tw-border-0 file:tw-bg-transparent file:tw-text-sm file:tw-font-medium placeholder:tw-text-muted-foreground focus-visible:tw-outline-none focus-visible:tw-ring-1 focus-visible:tw-ring-ring disabled:tw-cursor-not-allowed disabled:tw-opacity-50",
+            className
+          ) }
+          ref={ ref }
+          { ...props }
+        />
+        { error && (
+          <p className="tw-text-red-500 tw-text-xs mt-1">
+            { error.message }
+          </p>
+        ) }
+      </div>
+    )
+  }
 )
-Input.displayName = 'Input'
+Input.displayName = "Input"
 
 export { Input }
