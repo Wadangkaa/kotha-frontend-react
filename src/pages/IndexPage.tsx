@@ -8,7 +8,7 @@ const IndexPage = () => {
 				<header className="header axil-header header-style-7">
 
 					<div id="axil-sticky-placeholder"></div>
-					<div className="axil-mainmenu">
+					<div className="axil-mainmenu axil-sticky">
 						<div className="container-fluid">
 							<div className="header-navbar">
 								<div className="header-brand">
@@ -48,14 +48,16 @@ const IndexPage = () => {
 												<i className="far fa-search"></i>
 											</button>
 										</li>
-										<li className="axil-search d-none-desktop">
-											<a href="#" className="header-search-icon" title="Search">
-												<i className="far fa-search"></i>
+										<li className="shopping-cart">
+											<a href="#" className="cart-dropdown-btn">
+												<span className="cart-count">2</span>
+												{/* <i className="far fa-shopping-cart"></i> */ }
+												<i className="far fa-filter"></i>
 											</a>
 										</li>
 
 										<li className="my-account">
-											<a href="#">
+											<a href="javascript:void(0)">
 												<i className="far fa-user"></i>
 											</a>
 											<div className="my-account-dropdown">
@@ -95,16 +97,14 @@ const IndexPage = () => {
 
 
 				<main className="main-wrapper">
-
 					<div className="axil-main-slider-area main-slider-style-4">
 						<div className="container">
 							<div className="row align-items-center">
 								<div className="col-md-6">
 									<div className="main-slider-content">
-										<h1 className="title">Find Your Perfect Home Today.</h1>
+										<h1 className="title tw-font-semibold">Find Your Perfect Home Today.</h1>
 										<div className="shop-btn">
-											<a href="shop.html" className="axil-btn btn-bg-primary"><i className="far fa-shopping-cart"></i> Check
-												it Out!</a>
+											<a href="shop.html" className="axil-btn btn-bg-primary"><i className="far fa-search"></i> Search Kotha</a>
 										</div>
 									</div>
 								</div>
@@ -119,99 +119,10 @@ const IndexPage = () => {
 						</div>
 					</div>
 
-					<div className="product-collection-area bg-lighter axil-section-gapcommon">
-						<div className="container">
-							<div className="section-title-border">
-								<h2 className="title">Today’s Best Deals 💥</h2>
-								<div className="view-btn"><a href="shop.html">View All Deals</a></div>
-							</div>
-							<div className="row">
-								<div className="col-xl-7">
-									<div className="product-collection product-collection-two">
-										<div className="collection-content">
-											<h3 className="title">Decorative Plant <br /> For Home</h3>
-											<div className="price-warp">
-												<span className="price-text">Starting From</span>
-												<span className="price">$35.00</span>
-											</div>
-											<div className="shop-btn">
-												<a href="shop.html" className="axil-btn btn-bg-primary btn-size-md"><i className="far fa-shopping-cart"></i> View All Items</a>
-											</div>
-										</div>
-										<div className="collection-thumbnail">
-											<img src="assets/images/product/collection_5.jpg" alt="Mega Collection" />
-										</div>
-									</div>
-								</div>
-								<div className="col-xl-5">
-									<div className="row">
-										<div className="col-md-6">
-											<div className="product-collection-three">
-												<div className="collection-content">
-													<h6 className="title"><a href="shop.html">Ladies Short Sleeve Dress</a></h6>
-													<div className="price-warp">
-														<span className="price-text">Starting From</span>
-														<span className="price">$30.00</span>
-													</div>
-												</div>
-												<div className="collection-thumbnail">
-													<img src="assets/images/product/collection_5.png" alt="Product" />
-												</div>
-											</div>
-										</div>
-										<div className="col-md-6">
-											<div className="product-collection-three">
-												<div className="collection-content">
-													<h6 className="title"><a href="shop.html">Oil Soap Wood Home Cleaner</a></h6>
-													<div className="price-warp">
-														<span className="price-text">Starting From</span>
-														<span className="price">$15.22</span>
-													</div>
-												</div>
-												<div className="collection-thumbnail">
-													<img src="assets/images/product/collection_6.png" alt="Product" />
-												</div>
-											</div>
-										</div>
-										<div className="col-md-6">
-											<div className="product-collection-three">
-												<div className="collection-content">
-													<h6 className="title"><a href="shop.html">Large Pendant Light Ceiling </a></h6>
-													<div className="price-warp">
-														<span className="price-text">Starting From</span>
-														<span className="price">$11.70</span>
-													</div>
-												</div>
-												<div className="collection-thumbnail">
-													<img src="assets/images/product/collection_7.png" alt="Product" />
-												</div>
-											</div>
-										</div>
-										<div className="col-md-6">
-											<div className="product-collection-three">
-												<div className="collection-content">
-													<h6 className="title"><a href="shop.html">Iphone New Model</a></h6>
-													<div className="price-warp">
-														<span className="price-text">Starting From</span>
-														<span className="price">$499.00</span>
-													</div>
-												</div>
-												<div className="collection-thumbnail">
-													<img src="assets/images/product/collection_8.png" alt="Product" />
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
 					<div className="axil-product-area bg-color-white section-gap-80-35">
 						<div className="container">
 							<div className="section-title-border">
-								<h2 className="title">Explore Our Products 💥</h2>
-								<div className="view-btn"><a href="shop.html">View All Products</a></div>
+								<h2 className="title">Explore Our kothas </h2>
 							</div>
 							<div className="row">
 								<div className="col-xl-3 col-lg-4 col-sm-6 col-12">
@@ -1366,85 +1277,6 @@ const IndexPage = () => {
 					</div>
 				</div>
 
-				<div className="header-search-modal" id="header-search-modal">
-					<button className="card-close sidebar-close"><i className="fas fa-times"></i></button>
-					<div className="header-search-wrap">
-						<div className="card-header">
-							<form action="#">
-								<div className="input-group">
-									<input type="search" className="form-control" name="prod-search" id="prod-search" placeholder="Write Something...." />
-									<button type="submit" className="axil-btn btn-bg-primary"><i className="far fa-search"></i></button>
-								</div>
-							</form>
-						</div>
-						<div className="card-body">
-							<div className="search-result-header">
-								<h6 className="title">24 Result Found</h6>
-								<a href="shop.html" className="view-all">View All</a>
-							</div>
-							<div className="psearch-results">
-								<div className="axil-product-list">
-									<div className="thumbnail">
-										<a href="single-product.html">
-											<img src="./assets/images/product/electric/product-09.png" alt="Yantiti Leather Bags" />
-										</a>
-									</div>
-									<div className="product-content">
-										<div className="product-rating">
-											<span className="rating-icon">
-												<i className="fas fa-star"></i>
-												<i className="fas fa-star"></i>
-												<i className="fas fa-star"></i>
-												<i className="fas fa-star"></i>
-												<i className="fal fa-star"></i>
-											</span>
-											<span className="rating-number"><span>100+</span> Reviews</span>
-										</div>
-										<h6 className="product-title"><a href="single-product.html">Media Remote</a></h6>
-										<div className="product-price-variant">
-											<span className="price current-price">$29.99</span>
-											<span className="price old-price">$49.99</span>
-										</div>
-										<div className="product-cart">
-											<a href="cart.html" className="cart-btn"><i className="fal fa-shopping-cart"></i></a>
-											<a href="wishlist.html" className="cart-btn"><i className="fal fa-heart"></i></a>
-										</div>
-									</div>
-								</div>
-								<div className="axil-product-list">
-									<div className="thumbnail">
-										<a href="single-product.html">
-											<img src="./assets/images/product/electric/product-09.png" alt="Yantiti Leather Bags" />
-										</a>
-									</div>
-									<div className="product-content">
-										<div className="product-rating">
-											<span className="rating-icon">
-												<i className="fas fa-star"></i>
-												<i className="fas fa-star"></i>
-												<i className="fas fa-star"></i>
-												<i className="fas fa-star"></i>
-												<i className="fal fa-star"></i>
-											</span>
-											<span className="rating-number"><span>100+</span> Reviews</span>
-										</div>
-										<h6 className="product-title"><a href="single-product.html">Media Remote</a></h6>
-										<div className="product-price-variant">
-											<span className="price current-price">$29.99</span>
-											<span className="price old-price">$49.99</span>
-										</div>
-										<div className="product-cart">
-											<a href="cart.html" className="cart-btn"><i className="fal fa-shopping-cart"></i></a>
-											<a href="wishlist.html" className="cart-btn"><i className="fal fa-heart"></i></a>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-
 				<div className="cart-dropdown" id="cart-dropdown">
 					<div className="cart-content-wrap">
 						<div className="cart-header">
@@ -1536,31 +1368,6 @@ const IndexPage = () => {
 						</div>
 					</div>
 				</div>
-
-
-
-				{/* 
-				<script src="assets/js/vendor/modernizr.min.js"></script>
-
-				<script src="assets/js/vendor/jquery.js"></script>
-
-				<script src="assets/js/vendor/popper.min.js"></script>
-				<script src="assets/js/vendor/bootstrap.min.js"></script>
-				<script src="assets/js/vendor/slick.min.js"></script>
-				<script src="assets/js/vendor/js.cookie.js"></script>
-
-				<script src="assets/js/vendor/jquery-ui.min.js"></script>
-				<script src="assets/js/vendor/jquery.ui.touch-punch.min.js"></script>
-				<script src="assets/js/vendor/jquery.countdown.min.js"></script>
-				<script src="assets/js/vendor/sal.js"></script>
-				<script src="assets/js/vendor/jquery.magnific-popup.min.js"></script>
-				<script src="assets/js/vendor/imagesloaded.pkgd.min.js"></script>
-				<script src="assets/js/vendor/isotope.pkgd.min.js"></script>
-				<script src="assets/js/vendor/counterup.js"></script>
-				<script src="assets/js/vendor/waypoints.min.js"></script> */}
-
-
-				<script src="assets/js/main.js"></script>
 
 			</div>
 		</div>
