@@ -22,7 +22,7 @@ export const useCustomForm = <T extends FieldValues>(options = {}) => {
 				})
 			}
 
-			return await apiFetch<ApiResponse<R>>(url, options, handleFormValidation)
+			return await apiFetch<R>(url, options, handleFormValidation)
 		} catch (error) {
 			if (error instanceof Error) {
 				toast.error(error.message)
