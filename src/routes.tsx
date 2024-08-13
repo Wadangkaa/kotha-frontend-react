@@ -2,11 +2,18 @@ import { createBrowserRouter } from 'react-router-dom'
 import LoginPage from './pages/LoginPage'
 import UserListPage from './pages/users/UserListPage'
 import IndexPage from './pages/IndexPage'
+import MainLayout from './pages/layouts/MainLayout'
 
 export const router = createBrowserRouter([
 	{
 		path: '/',
-		element: <IndexPage />,
+		element: <MainLayout />,
+		children: [
+			{
+				path: '/',
+				element: <IndexPage />,
+			},
+		]
 	},
 	{
 		path: '/login',
