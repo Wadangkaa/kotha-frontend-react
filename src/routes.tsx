@@ -3,6 +3,7 @@ import LoginPage from './pages/LoginPage'
 import UserListPage from './pages/users/UserListPage'
 import IndexPage from './pages/IndexPage'
 import MainLayout from './pages/layouts/MainLayout'
+import KothaDetailPage from './pages/kotha/KothaDetailPage'
 
 export const router = createBrowserRouter([
 	{
@@ -13,6 +14,10 @@ export const router = createBrowserRouter([
 				path: '/',
 				element: <IndexPage />,
 			},
+			{
+				path: '/details/:id',
+				element: <KothaDetailPage />
+			}
 		]
 	},
 	{

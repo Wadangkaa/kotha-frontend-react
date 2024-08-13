@@ -16,7 +16,7 @@ const MainLayout = () => {
 								<div className="header-navbar">
 									<div className="header-brand">
 										<a href="/" className="logo logo-dark">
-											<img src="assets/images/logo/kotha-horizontal.png" alt="Site Logo" className="tw-h-[50px]" />
+											<img src="/assets/images/logo/kotha-horizontal.png" alt="Site Logo" className="tw-h-[50px]" />
 										</a>
 										<a href="index.html" className="logo logo-light">
 											<img src="assets/images/logo/logo-light.png" alt="Site Logo" />
@@ -27,7 +27,7 @@ const MainLayout = () => {
 											<button className="mobile-close-btn mobile-nav-toggler"><i className="fas fa-times"></i></button>
 											<div className="mobile-nav-brand">
 												<a href="index.html" className="logo">
-													<img src="assets/images/logo/logo.png" alt="Site Logo" />
+													<img src="/assets/images/logo/logo.png" alt="Site Logo" />
 												</a>
 											</div>
 											<ul className="mainmenu">
@@ -54,7 +54,6 @@ const MainLayout = () => {
 											<li className="shopping-cart">
 												<a href="#" className="cart-dropdown-btn">
 													<span className="cart-count">2</span>
-													{/* <i className="far fa-shopping-cart"></i> */ }
 													<i className="far fa-filter"></i>
 												</a>
 											</li>
