@@ -31,7 +31,7 @@ const MainLayout = () => {
 												</a>
 											</div>
 											<ul className="mainmenu">
-												<li>
+												{/* <li>
 													<a href="shop.html"><i className="far fa-bags-shopping"></i> Shop</a>
 												</li>
 												<li>
@@ -39,7 +39,7 @@ const MainLayout = () => {
 												</li>
 												<li>
 													<a href="contact.html"><i className="far fa-headset"></i>Support</a>
-												</li>
+												</li> */}
 											</ul>
 										</nav>
 									</div>
@@ -59,7 +59,7 @@ const MainLayout = () => {
 											</li>
 
 											<li className="my-account">
-												<a href="javascript:void(0)">
+												<a href="#">
 													<i className="far fa-user"></i>
 												</a>
 												<div className="my-account-dropdown">
