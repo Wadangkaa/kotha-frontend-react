@@ -4,6 +4,8 @@ import { apiFetch } from "@/utilities/apiFetch";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import Slider from "react-slick";
+import MapComponent from "@/components/MapComponent";
+
 
 const getKothaDetail = async (id: number): Promise<ApiResponse<KothaDetail>> => {
 	return await apiFetch(`api/kotha/${id}`);
@@ -24,7 +26,9 @@ const KothaDetailPage = () => {
 		getKothaDetail(kothaId).then((response) => {
 			setKotha(response.data);
 			setNav1(sliderRef1.current);
-			setNav2(sliderRef2.current);
+			setNav2(sliderRef2.current); if (kotha) {
+				initMap();
+			}
 		});
 	}, [id]);
 
@@ -236,6 +240,7 @@ const KothaDetailPage = () => {
 																			</table>
 																		</div>
 																	</div>
+
 																</div>
 															</div>
 														</div>
@@ -245,6 +250,7 @@ const KothaDetailPage = () => {
 										</div>
 									</div>
 								</div>
+								<MapComponent longitude={ Number(kotha.contact.longitude) } latitude={ Number(kotha.contact.latitude) } />
 							</div>
 						</div>
 					</div>
