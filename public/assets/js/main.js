@@ -1,7 +1,7 @@
 ;(function (window, document, $, undefined) {
 	'use strict'
 
-	var axilInit = {
+	let axilInit = {
 		i: function (e) {
 			axilInit.s()
 			axilInit.methods()
@@ -61,15 +61,15 @@
 		contactForm: function () {
 			$('.axil-contact-form').on('submit', function (e) {
 				e.preventDefault()
-				var _self = $(this)
-				var _selector = _self.closest('input,textarea')
+				let _self = $(this)
+				let _selector = _self.closest('input,textarea')
 				_self.closest('div').find('input,textarea').removeAttr('style')
 				_self.find('.error-msg').remove()
 				_self
 					.closest('div')
 					.find('button[type="submit"]')
 					.attr('disabled', 'disabled')
-				var data = $(this).serialize()
+				let data = $(this).serialize()
 				$.ajax({
 					url: 'mail.php',
 					type: 'post',
@@ -105,7 +105,7 @@
 		},
 
 		counterUpActivation: function () {
-			var _counter = $('.count')
+			let _counter = $('.count')
 			if (_counter.length) {
 				_counter.counterUp({
 					delay: 10,
@@ -128,7 +128,7 @@
 		},
 
 		axilBackToTop: function () {
-			var btn = $('#backto-top')
+			let btn = $('#backto-top')
 			$(window).scroll(function () {
 				if ($(window).scrollTop() > 300) {
 					btn.addClass('show')
@@ -149,15 +149,15 @@
 
 		shopFilterWidget: function () {
 			$('.toggle-list > .title').on('click', function (e) {
-				var target = $(this).parent().children('.shop-submenu')
-				var target2 = $(this).parent()
+				let target = $(this).parent().children('.shop-submenu')
+				let target2 = $(this).parent()
 				$(target).slideToggle()
 				$(target2).toggleClass('active')
 			})
 
 			$('.toggle-btn').on('click', function (e) {
-				var target = $(this).parent().siblings('.toggle-open')
-				var target2 = $(this).parent()
+				let target = $(this).parent().siblings('.toggle-open')
+				let target2 = $(this).parent()
 				$(target).slideToggle()
 				$(target2).toggleClass('active')
 			})
@@ -165,8 +165,8 @@
 
 		mobileMenuActivation: function (e) {
 			$('.menu-item-has-children > a').on('click', function (e) {
-				var targetParent = $(this).parents('.header-main-nav')
-				var target = $(this).siblings('.axil-submenu')
+				let targetParent = $(this).parents('.header-main-nav')
+				let target = $(this).siblings('.axil-submenu')
 
 				if (targetParent.hasClass('open')) {
 					$(target).slideToggle(400)
@@ -175,7 +175,7 @@
 			})
 
 			$('.nav-link.has-megamenu').on('click', function (e) {
-				var $this = $(this),
+				let $this = $(this),
 					targetElm = $this.siblings('.megamenu-mobile-toggle')
 				targetElm.slideToggle(500)
 			})
@@ -201,10 +201,10 @@
 		},
 
 		menuLinkActive: function () {
-			var currentPage = location.pathname.split('/'),
+			let currentPage = location.pathname.split('/'),
 				current = currentPage[currentPage.length - 1]
 			$('.mainmenu li a, .main-navigation li a').each(function () {
-				var $this = $(this)
+				let $this = $(this)
 				if ($this.attr('href') === current) {
 					$this.addClass('active')
 					$this.parents('.menu-item-has-children').addClass('menu-item-open')
@@ -240,14 +240,14 @@
 			$('.pro-qty').prepend('<span class="dec qtybtn">-</span>')
 			$('.pro-qty').append('<span class="inc qtybtn">+</span>')
 			$('.qtybtn').on('click', function () {
-				var $button = $(this)
-				var oldValue = $button.parent().find('input').val()
+				let $button = $(this)
+				let oldValue = $button.parent().find('input').val()
 				if ($button.hasClass('inc')) {
-					var newVal = parseFloat(oldValue) + 1
+					let newVal = parseFloat(oldValue) + 1
 				} else {
 					// Don't allow decrementing below zero
 					if (oldValue > 0) {
-						var newVal = parseFloat(oldValue) - 1
+						let newVal = parseFloat(oldValue) - 1
 					} else {
 						newVal = 0
 					}
@@ -636,12 +636,12 @@
 				],
 			})
 
-			var $slideStatus = $('.slick-slide-count')
+			let $slideStatus = $('.slick-slide-count')
 
 			$('.testimonial-slick-activation-three').on(
 				'init reInit afterChange',
 				function (event, slick, currentSlide, nextSlide) {
-					var i = (currentSlide ? currentSlide : 0) + 1
+					let i = (currentSlide ? currentSlide : 0) + 1
 					$slideStatus.text(i + '/' + slick.slideCount)
 				}
 			)
@@ -1003,7 +1003,7 @@
 		},
 
 		countdownInit: function (countdownSelector, countdownTime) {
-			var eventCounter = $(countdownSelector)
+			let eventCounter = $(countdownSelector)
 			if (eventCounter.length) {
 				eventCounter.countdown(countdownTime, function (e) {
 					$(this).html(
@@ -1016,7 +1016,7 @@
 		},
 
 		campaignCountdown: function (countdownSelector, countdownTime) {
-			var eventCounter = $(countdownSelector)
+			let eventCounter = $(countdownSelector)
 			if (eventCounter.length) {
 				eventCounter.countdown(countdownTime, function (e) {
 					$(this).html(
@@ -1032,7 +1032,7 @@
 			$('body').on('click', selectbtn, function (e) {
 				e.preventDefault()
 
-				var $this = $(this),
+				let $this = $(this),
 					wrapp = $this.parents('body'),
 					wrapMask = $('<div / >').addClass('closeMask'),
 					cartDropdown = $(openElement)
@@ -1064,7 +1064,7 @@
 			$(window).on('scroll', function () {
 				// Sticky Class Add
 				if ($('body').hasClass('sticky-header')) {
-					var stickyPlaceHolder = $('#axil-sticky-placeholder'),
+					let stickyPlaceHolder = $('#axil-sticky-placeholder'),
 						menu = $('.axil-mainmenu'),
 						menuH = menu.outerHeight(),
 						topHeaderH = $('.axil-header-top').outerHeight() || 0,
@@ -1089,7 +1089,7 @@
 		},
 
 		magnificPopupActivation: function () {
-			var yPopup = $('.popup-youtube')
+			let yPopup = $('.popup-youtube')
 			if (yPopup.length) {
 				yPopup.magnificPopup({
 					disableOn: 300,
@@ -1122,7 +1122,7 @@
 
 		headerCampaignRemove: function () {
 			$('.remove-campaign').on('click', function () {
-				var targetElem = $('.header-top-campaign')
+				let targetElem = $('.header-top-campaign')
 				targetElem.slideUp(function () {
 					$(this).remove()
 				})
@@ -1142,14 +1142,14 @@
 			$('.axil-isotope-wrapper').imagesLoaded(function () {
 				// filter items on button click
 				$('.isotope-button').on('click', 'button', function () {
-					var filterValue = $(this).attr('data-filter')
+					let filterValue = $(this).attr('data-filter')
 					$grid.isotope({
 						filter: filterValue,
 					})
 				})
 
 				// init Isotope
-				var $grid = $('.isotope-list').isotope({
+				let $grid = $('.isotope-list').isotope({
 					itemSelector: '.product',
 					percentPosition: true,
 					transitionDuration: '0.7s',

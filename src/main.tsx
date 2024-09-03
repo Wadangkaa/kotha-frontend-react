@@ -15,19 +15,21 @@ const queryClient = new QueryClient()
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
 	<React.StrictMode>
-		<Toaster
-			position='top-right'
-			richColors
-			closeButton
-		/>
-		<QueryClientProvider client={ queryClient }>
-			<ReactQueryDevtools
-				initialIsOpen={ false }
-				position='bottom-right'
+		<>
+			<Toaster
+				position='top-right'
+				richColors
+				closeButton
 			/>
-			<Provider store={ store }>
-				<RouterProvider router={ router } />
-			</Provider>
-		</QueryClientProvider>
+			<QueryClientProvider client={ queryClient }>
+				<ReactQueryDevtools
+					initialIsOpen={ false }
+					position='bottom-right'
+				/>
+				<Provider store={ store }>
+					<RouterProvider router={ router } />
+				</Provider>
+			</QueryClientProvider>
+		</>
 	</React.StrictMode>
 )

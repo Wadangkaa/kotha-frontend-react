@@ -17,6 +17,10 @@ export type Kotha = {
 	category_id: number
 	category: Category
 	price: number
+	district: {
+		id: number
+		name: string
+	}
 	negotiable: number
 	purpose: string
 	created_at: Date

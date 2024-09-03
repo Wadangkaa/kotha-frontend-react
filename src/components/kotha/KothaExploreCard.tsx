@@ -34,7 +34,7 @@ const KothaExploreCard = ({ kotha }: KothaExploreCardProps) => {
 							<h5 className="title"><a href="single-product-8.html">{ kotha.title.length > 28 ? kotha.title.substring(0, 28) + "..." : kotha.title }</a></h5>
 							<div className="tw-mb-2">
 								<i className="far fa-location-dot "></i>
-								<span className="tw-font-semibold"> { kotha.price }</span>
+								<span className="tw-font-semibold tw-capitalize"> { kotha.district.name }</span>
 							</div>
 							<div className="product-price-variant">
 								<span className="price current-price">Rs. { kotha.price }</span>
