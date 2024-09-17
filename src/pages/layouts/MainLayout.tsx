@@ -1,4 +1,5 @@
-import { Outlet } from "react-router-dom"
+import SidebarFilter from "@/components/SidebarFilter"
+import { NavLink, Outlet } from "react-router-dom"
 
 const MainLayout = () => {
 	return (
@@ -45,12 +46,16 @@ const MainLayout = () => {
 									</div>
 									<div className="header-action">
 										<ul className="action-list">
-											<li className="axil-search d-none-laptop">
+											{/* <li className="axil-search d-none-laptop">
 												<input type="search" className="placeholder product-search-input" name="search2" id="search2" maxLength={ 128 } placeholder="Search" autoComplete="off" />
 												<button type="submit" className="icon wooc-btn-search">
 													<i className="far fa-search"></i>
 												</button>
-											</li>
+											</li> */}
+
+											<NavLink to={ `/search-in-map` }>
+												Search room in map
+											</NavLink>
 											<li className="shopping-cart">
 												<a href="#" className="cart-dropdown-btn">
 													<span className="cart-count">2</span>
@@ -310,182 +315,7 @@ const MainLayout = () => {
 					</div>
 
 					<div className="cart-dropdown" id="cart-dropdown">
-						{/* <div className="cart-content-wrap">
-							<div className="cart-header">
-								<h2 className="header-title">Cart review</h2>
-								<button className="cart-close sidebar-close"><i className="fas fa-times"></i></button>
-							</div>
-							<div className="cart-body">
-								<ul className="cart-item-list">
-									<li className="cart-item">
-										<div className="item-img">
-											<a href="single-product.html"><img src="assets/images/product/electric/product-01.png" alt="Commodo Blown Lamp" /></a>
-											<button className="close-btn"><i className="fas fa-times"></i></button>
-										</div>
-										<div className="item-content">
-											<div className="product-rating">
-												<span className="icon">
-													<i className="fas fa-star"></i>
-													<i className="fas fa-star"></i>
-													<i className="fas fa-star"></i>
-													<i className="fas fa-star"></i>
-													<i className="fas fa-star"></i>
-												</span>
-												<span className="rating-number">(64)</span>
-											</div>
-											<h3 className="item-title"><a href="single-product-3.html">Wireless PS Handler</a></h3>
-											<div className="item-price"><span className="currency-symbol">$</span>155.00</div>
-											<div className="pro-qty item-quantity">
-												<input type="number" className="quantity-input" />
-											</div>
-										</div>
-									</li>
-									<li className="cart-item">
-										<div className="item-img">
-											<a href="single-product-2.html"><img src="assets/images/product/electric/product-02.png" alt="Commodo Blown Lamp" /></a>
-											<button className="close-btn"><i className="fas fa-times"></i></button>
-										</div>
-										<div className="item-content">
-											<div className="product-rating">
-												<span className="icon">
-													<i className="fas fa-star"></i>
-													<i className="fas fa-star"></i>
-													<i className="fas fa-star"></i>
-													<i className="fas fa-star"></i>
-													<i className="fas fa-star"></i>
-												</span>
-												<span className="rating-number">(4)</span>
-											</div>
-											<h3 className="item-title"><a href="single-product-2.html">Gradient Light Keyboard</a></h3>
-											<div className="item-price"><span className="currency-symbol">$</span>255.00</div>
-											<div className="pro-qty item-quantity">
-												<input type="number" className="quantity-input" />
-											</div>
-										</div>
-									</li>
-									<li className="cart-item">
-										<div className="item-img">
-											<a href="single-product-3.html"><img src="assets/images/product/electric/product-03.png" alt="Commodo Blown Lamp" /></a>
-											<button className="close-btn"><i className="fas fa-times"></i></button>
-										</div>
-										<div className="item-content">
-											<div className="product-rating">
-												<span className="icon">
-													<i className="fas fa-star"></i>
-													<i className="fas fa-star"></i>
-													<i className="fas fa-star"></i>
-													<i className="fas fa-star"></i>
-													<i className="fas fa-star"></i>
-												</span>
-												<span className="rating-number">(6)</span>
-											</div>
-											<h3 className="item-title"><a href="single-product.html">HD CC Camera</a></h3>
-											<div className="item-price"><span className="currency-symbol">$</span>200.00</div>
-											<div className="pro-qty item-quantity">
-												<input type="number" className="quantity-input" />
-											</div>
-										</div>
-									</li>
-								</ul>
-							</div>
-							<div className="cart-footer">
-								<h3 className="cart-subtotal">
-									<span className="subtotal-title">Subtotal:</span>
-									<span className="subtotal-amount">$610.00</span>
-								</h3>
-								<div className="group-btn">
-									<a href="cart.html" className="axil-btn btn-bg-primary viewcart-btn">View Cart</a>
-									<a href="checkout.html" className="axil-btn btn-bg-secondary checkout-btn">Checkout</a>
-								</div>
-							</div>
-						</div> */}
-						<div className="col-lg-3 cart-content-wrap">
-							<div className="cart-header">
-								<h2 className="header-title">Filter kotha</h2>
-								<button className="cart-close sidebar-close"><i className="fas fa-times"></i></button>
-							</div>
-							<div className="axil-shop-sidebar">
-								<div className="d-lg-none">
-									<button className="sidebar-close filter-close-btn"><i className="fas fa-times"></i></button>
-								</div>
-								<div className="toggle-list product-categories active">
-									<h6 className="title">CATEGORIES</h6>
-									<div className="shop-submenu">
-										<ul>
-											<li className="current-cat"><a href="#">Sun Care</a></li>
-											<li><a href="#">Night Care</a></li>
-											<li><a href="#">Treatments</a></li>
-											<li><a href="#">Moisturizers</a></li>
-											<li><a href="#">Eye Care</a></li>
-											<li><a href="#">Masks</a></li>
-											<li><a href="#">Featured</a></li>
-											<li><a href="#">On Sale</a></li>
-										</ul>
-									</div>
-								</div>
-								<div className="toggle-list product-categories product-gender active">
-									<h6 className="title">GENDER</h6>
-									<div className="shop-submenu">
-										<ul>
-											<li className="chosen"><a href="#">Men (40)</a></li>
-											<li><a href="#">Women (56)</a></li>
-											<li><a href="#">Unisex (18)</a></li>
-										</ul>
-									</div>
-								</div>
-								<div className="toggle-list product-color active">
-									<h6 className="title">COLORS</h6>
-									<div className="shop-submenu">
-										<ul>
-											<li className="chosen"><a href="#" className="color-extra-01"></a></li>
-											<li><a href="#" className="color-extra-02"></a></li>
-											<li><a href="#" className="color-extra-03"></a></li>
-											<li><a href="#" className="color-extra-04"></a></li>
-											<li><a href="#" className="color-extra-05"></a></li>
-											<li><a href="#" className="color-extra-06"></a></li>
-											<li><a href="#" className="color-extra-07"></a></li>
-											<li><a href="#" className="color-extra-08"></a></li>
-											<li><a href="#" className="color-extra-09"></a></li>
-											<li><a href="#" className="color-extra-10"></a></li>
-											<li><a href="#" className="color-extra-11"></a></li>
-										</ul>
-									</div>
-								</div>
-
-								<div className="toggle-list product-size active">
-									<h6 className="title">SIZE</h6>
-									<div className="shop-submenu">
-										<ul>
-											<li className="chosen"><a href="#">XS</a></li>
-											<li><a href="#">S</a></li>
-											<li><a href="#">M</a></li>
-											<li><a href="#">L</a></li>
-											<li><a href="#">XL</a></li>
-											<li><a href="#">XXL</a></li>
-											<li><a href="#">3XL</a></li>
-											<li><a href="#">4XL</a></li>
-										</ul>
-									</div>
-								</div>
-								<div className="toggle-list product-price-range active">
-									<h6 className="title">PRICE</h6>
-									<div className="shop-submenu">
-										<ul>
-											<li className="chosen"><a href="#">30</a></li>
-											<li><a href="#">5000</a></li>
-										</ul>
-										<form action="#" className="mt--25">
-											<div id="slider-range"></div>
-											<div className="flex-center mt--20">
-												<span className="input-range">Price: </span>
-												<input type="text" id="amount" className="amount-range" readOnly />
-											</div>
-										</form>
-									</div>
-								</div>
-								<button className="axil-btn btn-bg-primary">All Reset</button>
-							</div>
-						</div>
+						<SidebarFilter />
 					</div>
 
 				</div>

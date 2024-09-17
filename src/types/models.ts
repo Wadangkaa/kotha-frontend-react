@@ -17,10 +17,7 @@ export type Kotha = {
 	category_id: number
 	category: Category
 	price: number
-	district: {
-		id: number
-		name: string
-	}
+	district: District
 	negotiable: number
 	purpose: string
 	created_at: Date
@@ -33,6 +30,7 @@ export type KothaDetail = {
 	images: Image[]
 	category_id: number
 	category: Category
+	district: District
 	price: number
 	negotiable: number
 	purpose: string
@@ -61,4 +59,9 @@ export type Facility = {
 	rental_floor_id: number
 	rental_floor_name: string
 	water_facility: string
+}
+
+type District = {
+	id: number
+	name: string
 }

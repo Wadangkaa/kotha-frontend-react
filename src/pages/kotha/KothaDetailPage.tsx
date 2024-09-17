@@ -53,7 +53,6 @@ const KothaDetailPage = () => {
 															<img
 																src={ `${import.meta.env.VITE_BASE_URL}/storage/${image.image_url}` }
 																alt={ kotha.title }
-															// className="tw-h-full tw-w-full tw-object-cover"
 															/>
 														</div>
 													)) }
@@ -159,6 +158,10 @@ const KothaDetailPage = () => {
 																					<tr>
 																						<th>Type</th>
 																						<td>{ kotha.category.name }</td>
+																					</tr>
+																					<tr>
+																						<th>District</th>
+																						<td className="tw-capitalize">{ kotha.district.name }</td>
 																					</tr>
 																					<tr>
 																						<th>Purpose</th>
