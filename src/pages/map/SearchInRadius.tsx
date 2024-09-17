@@ -6,6 +6,7 @@ import { ApiResponseWithPagination } from '@/types/commonTypes';
 import { Contact, Kotha } from '@/types/models';
 import { NavLink } from 'react-router-dom';
 import { toast } from 'sonner';
+import { Button } from '@/components/ui/button';
 
 type Point = google.maps.LatLngLiteral & { kotha: Kotha };
 
@@ -69,9 +70,9 @@ export default function SearchInRadius() {
 	};
 
 	return (
-		<div className='tw-flex tw-p-10 tw-gap-4'>
-			<div className='tw-flex-[3]'>
-				<div style={ { height: '500px', width: '100%' } }>
+		<div className=''>
+			<div className=''>
+				<div style={ { height: '500px', width: '100%' } } className='tw-p-10 tw-relative'>
 					<APIProvider apiKey={ 'AIzaSyBt4cUvR9HOpwhNs_edkOTaYdRaHfgnfCs' }>
 						{/* Only render the map when center is available */ }
 						{ center && (
@@ -96,10 +97,11 @@ export default function SearchInRadius() {
 							</Map>
 						) }
 					</APIProvider>
+					<button className='tw-border-4 tw-absolute tw-top-14 tw-right-40 tw-w-auto tw-rounded-lg tw-bg-blue-700 tw-px-8 tw-py-4' onClick={ onSubmit }>
+						<span className='tw-text-white'>Search</span>
+					</button>
+
 				</div>
-			</div>
-			<div className='tw-flex-1'>
-				<button onClick={ onSubmit }>Submit</button>
 			</div>
 		</div>
 	);
