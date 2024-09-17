@@ -48,6 +48,7 @@ export type Contact = {
 	latitude: string
 	created_at: Date
 	updated_at: Date
+	kotha: Kotha
 }
 
 export type Facility = {

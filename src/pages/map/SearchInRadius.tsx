@@ -3,9 +3,10 @@ import { AdvancedMarker, APIProvider, Map, InfoWindow } from '@vis.gl/react-goog
 import { Circle } from './Circle';
 import { apiFetch } from '@/utilities/apiFetch';
 import { ApiResponseWithPagination } from '@/types/commonTypes';
-import { Contact } from '@/types/models';
+import { Contact, Kotha } from '@/types/models';
+import { NavLink } from 'react-router-dom';
 
-type Point = google.maps.LatLngLiteral & { key: string };
+type Point = google.maps.LatLngLiteral & { kotha: Kotha };
 
 export default function SearchInRadius() {
 	const [radius, setRadius] = useState(1000);
@@ -51,10 +52,10 @@ export default function SearchInRadius() {
 			});
 			// Set coordinates from fetched data
 			setCoordinates(
-				kothas.data.data.map((kotha) => ({
-					key: JSON.stringify(kotha),
-					lat: Number.parseFloat(kotha.latitude),
-					lng: Number.parseFloat(kotha.longitude),
+				kothas.data.data.map((contact) => ({
+					kotha: contact.kotha,
+					lat: Number.parseFloat(contact.latitude),
+					lng: Number.parseFloat(contact.longitude),
 				}))
 			);
 		} catch (error) {
@@ -108,8 +109,12 @@ const Marker = ({ point }: { point: Point; }) => {
 				<span style={ { fontSize: 20 } }>🏠</span>
 			</AdvancedMarker>
 			{ open && (
-				<InfoWindow onCloseClick={ () => setOpen(false) }>
-					<p>Hello </p>
+				<InfoWindow position={ point } onCloseClick={ () => setOpen(false) }>
+					<p>{ point.kotha.category.name } for { point.kotha.purpose } </p>
+					<p>Rs. { point.kotha.price }</p>
+					<NavLink to={ `/details/${point.kotha.id}` }>
+						<i className="far fa-eye"></i> View Details
+					</NavLink>
 				</InfoWindow>
 			) }
 		</>
