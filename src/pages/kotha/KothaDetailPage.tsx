@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import Slider from "react-slick";
 import MapComponent from "@/components/MapComponent";
+import { title } from "process";
 
 
 const getKothaDetail = async (id: number): Promise<ApiResponse<KothaDetail>> => {
@@ -253,7 +254,7 @@ const KothaDetailPage = () => {
 										</div>
 									</div>
 								</div>
-								<MapComponent longitude={ Number(kotha.contact.longitude) } latitude={ Number(kotha.contact.latitude) } />
+								<MapComponent longitude={ Number(kotha.contact.longitude) } latitude={ Number(kotha.contact.latitude) } title={ kotha.title } />
 							</div>
 						</div>
 					</div>

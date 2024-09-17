@@ -20,6 +20,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 				position='top-right'
 				richColors
 				closeButton
+				theme='light'
 			/>
 			<QueryClientProvider client={ queryClient }>
 				<ReactQueryDevtools

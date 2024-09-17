@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-const MapComponent = ({ longitude, latitude }: {
-	longitude: Number, latitude: Number
+const MapComponent = ({ longitude, latitude, title }: {
+	longitude: number, latitude: number, title: string
 }) => {
 	const [map, setMap] = useState<google.maps.Map | null>(null);
 	const [loading, setLoading] = useState(false);
@@ -11,11 +11,11 @@ const MapComponent = ({ longitude, latitude }: {
 		const initialize = () => {
 			if (!mapRef.current) return;
 
-			const myLatlng = { lat: latitude, lng: longitude };
+			const myLatlng: google.maps.LatLngLiteral = { lat: latitude, lng: longitude };
 
 			const mapOptions: google.maps.MapOptions = {
 				center: myLatlng,
-				zoom: 16,
+				zoom: 15,
 				mapTypeId: google.maps.MapTypeId.ROADMAP,
 			};
 
@@ -30,7 +30,7 @@ const MapComponent = ({ longitude, latitude }: {
 			const marker = new google.maps.Marker({
 				position: myLatlng,
 				map: newMap,
-				title: 'Uluru (Ayers Rock)',
+				title,
 			});
 
 			marker.addListener('click', () => {
@@ -74,24 +74,6 @@ const MapComponent = ({ longitude, latitude }: {
 		};
 	}, [map]);
 
-	const centerOnMe = () => {
-		if (!map) return;
-
-		setLoading(true);
-
-		navigator.geolocation.getCurrentPosition(
-			(pos) => {
-				const position = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-				map.setCenter(position);
-				setLoading(false);
-			},
-			(error) => {
-				alert('Unable to get location: ' + error.message);
-				setLoading(false);
-			}
-		);
-	};
-
 	const clickTest = () => {
 		alert('Example of infowindow with a button click');
 	};
@@ -99,7 +81,6 @@ const MapComponent = ({ longitude, latitude }: {
 	return (
 		<div>
 			<div id="map" ref={ mapRef } style={ { height: '500px', width: '100%' } }></div>
-			<button onClick={ centerOnMe }>Center on Me</button>
 			{ loading && <div>Loading...</div> }
 		</div>
 	);

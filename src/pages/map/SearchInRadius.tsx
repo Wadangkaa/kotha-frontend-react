@@ -5,6 +5,7 @@ import { apiFetch } from '@/utilities/apiFetch';
 import { ApiResponseWithPagination } from '@/types/commonTypes';
 import { Contact, Kotha } from '@/types/models';
 import { NavLink } from 'react-router-dom';
+import { toast } from 'sonner';
 
 type Point = google.maps.LatLngLiteral & { kotha: Kotha };
 
@@ -50,7 +51,6 @@ export default function SearchInRadius() {
 				method: 'POST',
 				body: JSON.stringify({ center, radius }),
 			});
-			// Set coordinates from fetched data
 			setCoordinates(
 				kothas.data.data.map((contact) => ({
 					kotha: contact.kotha,
@@ -58,6 +58,11 @@ export default function SearchInRadius() {
 					lng: Number.parseFloat(contact.longitude),
 				}))
 			);
+
+			if (kothas.data.data.length <= 0) {
+				console.log('data', 'no kotha found')
+				toast.info('No Kotha Found');
+			}
 		} catch (error) {
 			console.error('Error fetching data:', error);
 		}
