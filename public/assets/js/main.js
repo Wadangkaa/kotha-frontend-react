@@ -214,6 +214,7 @@
 
 		headerIconToggle: function () {
 			$('.my-account > a').on('click', function (e) {
+				console.log('clicked')
 				$(this).toggleClass('open').siblings().toggleClass('open')
 			})
 		},

@@ -2,6 +2,14 @@ import SidebarFilter from "@/components/SidebarFilter"
 import { NavLink, Outlet } from "react-router-dom"
 
 const MainLayout = () => {
+	const openMyAccountDropdown = () => {
+		const dropdown = document.getElementById("my-account-dropdown");
+		if (dropdown) {
+			dropdown.classList.toggle("open");
+		} else {
+			console.error('Element with id "my-account-dropdown" not found');
+		}
+	};
 	return (
 		<>
 			<div>
@@ -63,15 +71,15 @@ const MainLayout = () => {
 												</a>
 											</li>
 
-											<li className="my-account">
+											<li className="my-account" onClick={ openMyAccountDropdown }>
 												<a href="#">
 													<i className="far fa-user"></i>
 												</a>
-												<div className="my-account-dropdown">
-													<span className="title">QUICKLINKS</span>
+												<div className="my-account-dropdown" id="my-account-dropdown">
+													<span className="title">QUICK LINKS</span>
 													<ul>
 														<li>
-															<a href="my-account.html">My Account</a>
+															<a href="/account">My Account</a>
 														</li>
 														<li>
 															<a href="#">Initiate return</a>

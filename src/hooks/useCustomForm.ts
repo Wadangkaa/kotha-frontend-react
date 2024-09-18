@@ -1,43 +1,110 @@
 import { useForm, FieldValues, Path } from 'react-hook-form'
 import { toast } from 'sonner'
-import { apiFetch } from '@/utilities/apiFetch'
-import { RequestOptions, ApiResponse, ErrorResponse } from '@/types/commonTypes'
+
+type RequestOptions = {
+	method?: string
+	headers?: HeadersInit
+	body?: string
+}
+
+type ErrorResponse = {
+	status: number
+	message: string
+	errors: { [key: string]: string }
+}
+
+export type ApiResponse<T> = {
+	data: T
+	statusCode: number
+	message: string
+	success: boolean
+}
 
 export const useCustomForm = <T extends FieldValues>(options = {}) => {
 	const form = useForm<T>({
 		mode: 'onTouched',
 		...options,
 	})
-	const { handleSubmit, register, control, formState, setError } = form
+	const {
+		handleSubmit,
+		register,
+		control,
+		formState,
+		setError,
+		clearErrors,
+		reset,
+	} = form
 	const { errors, isDirty, isSubmitting } = formState
 
-	const api = async <R>(url: string, options: RequestOptions = {}) => {
-		try {
-			const handleFormValidation = (data: ErrorResponse) => {
-				Object.keys(data.error).forEach((key: string) => {
-					setError(key as Path<T>, {
-						type: 'manual',
-						message: data.error[key],
-					})
+	const errorMessages: { [key: number]: string } = {
+		401: 'Unauthorized access. Please log in.',
+		403: 'Forbidden access. You do not have the required permissions.',
+		404: 'Resource not found.',
+		500: 'Internal server error. Please try again later.',
+	}
+
+	const handleErrorResponse = async (
+		response: Response,
+		data: ErrorResponse
+	) => {
+		let errorMessage = 'Something went wrong'
+
+		if (errorMessages[response.status]) {
+			errorMessage = errorMessages[response.status]
+		} else if (response.status === 422) {
+			errorMessage = data.message
+			Object.keys(data.errors).forEach((key: string) => {
+				setError(key as Path<T>, {
+					type: 'custom',
+					message: data.errors[key],
 				})
+			})
+		} else {
+			errorMessage = data.message
+		}
+		throw new Error(errorMessage)
+	}
+
+	const api = async <R>(url: string, options: RequestOptions = {}) => {
+		options.headers = {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${localStorage.getItem('token') ?? ''}`,
+			...options.headers,
+		}
+
+		try {
+			const response = await fetch(url, options)
+			const data = await response.json()
+
+			if (!response.ok) {
+				await handleErrorResponse(response, data)
 			}
 
-			return await apiFetch<R>(url, options, handleFormValidation)
+			const contentType = response.headers.get('Content-Type')
+			if (!contentType || !contentType.includes('application/json')) {
+				throw new Error('Invalid response format')
+			}
+
+			return data as ApiResponse<R>
 		} catch (error) {
 			if (error instanceof Error) {
-				toast.error(error.message)
+				toast.error(`${error.message}`)
 			} else {
 				toast.error('Cannot connect to server: An unknown error occurred')
 			}
+			throw error
 		}
 	}
 
 	return {
 		api,
 		handleSubmit,
+		reset,
 		register,
 		control,
 		errors,
+		clearErrors,
 		isDirty,
 		isSubmitting,
 	}

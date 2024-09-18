@@ -5,6 +5,8 @@ import IndexPage from './pages/IndexPage'
 import MainLayout from './pages/layouts/MainLayout'
 import KothaDetailPage from './pages/kotha/KothaDetailPage'
 import SearchInRadius from './pages/map/SearchInRadius'
+import KothaCreatePage from './pages/kotha/KothaCreatePage'
+import AccountLayout from './pages/accounts/AccountLayout'
 
 export const router = createBrowserRouter([
 	{
@@ -12,7 +14,7 @@ export const router = createBrowserRouter([
 		element: <MainLayout />,
 		children: [
 			{
-				path: '/',
+				path: '',
 				element: <IndexPage />,
 			},
 			{
@@ -22,16 +24,30 @@ export const router = createBrowserRouter([
 			{
 				path: '/search-in-map',
 				element: <SearchInRadius />
+			},
+			{
+				path: '/kotha/create',
+				element: <KothaCreatePage />,
+			},
+			{
+				path: '/account',
+				element: <AccountLayout />,
+				children: [
+					{
+						path: '',
+						element: <h1>hello</h1>
+					},
+					{
+						path: 'create-kotha',
+						element: <KothaCreatePage />
+					}
+				]
 			}
 		]
 	},
 	{
 		path: '/login',
 		element: <LoginPage />,
-	},
-	{
-		path: '/app',
-		element: <h1>hello</h1>,
 	},
 	{
 		path: '/users',

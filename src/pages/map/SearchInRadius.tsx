@@ -6,7 +6,6 @@ import { ApiResponseWithPagination } from '@/types/commonTypes';
 import { Contact, Kotha } from '@/types/models';
 import { NavLink } from 'react-router-dom';
 import { toast } from 'sonner';
-import { Button } from '@/components/ui/button';
 
 type Point = google.maps.LatLngLiteral & { kotha: Kotha };
 
