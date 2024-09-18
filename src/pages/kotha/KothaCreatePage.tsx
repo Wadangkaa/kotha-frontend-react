@@ -4,8 +4,36 @@ import Select from "@/components/ui/user/select"
 import { useCustomForm } from '@/hooks/useCustomForm'
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { AdvancedMarker, APIProvider, Map } from '@vis.gl/react-google-maps'
+import { useEffect, useState } from 'react'
 
 const KothaCreatePage = () => {
+	const [center, setCenter] = useState<google.maps.LatLngLiteral | null>(null);
+
+	useEffect(() => {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(
+				(position) => {
+					setCenter({
+						lat: position.coords.latitude,
+						lng: position.coords.longitude,
+					});
+				},
+				(error) => {
+					console.error('Error fetching location', error);
+					setCenter({ lat: 27.693771, lng: 85.329209 }); // Default center
+				}
+			);
+		} else {
+			console.error('Geolocation is not supported by this browser.');
+			setCenter({ lat: 27.693771, lng: 85.329209 }); // Fallback to default
+		}
+	}, []);
+
+	const onDragEnd = (e: google.maps.MapMouseEvent) => {
+		if (!e.latLng) return;
+		setCenter({ lat: e.latLng.lat(), lng: e.latLng.lng() });
+	};
 
 	const handleCloseDialog = () => {
 		clearErrors()
@@ -171,10 +199,17 @@ const KothaCreatePage = () => {
 								</Select>
 							</div>
 
-							<div className="col-12">
+							<div className="col-12 tw-h-[400px]">
+								<APIProvider apiKey={ 'AIzaSyBt4cUvR9HOpwhNs_edkOTaYdRaHfgnfCs' }>
+									{ center && (
+										<Map defaultCenter={ center } defaultZoom={ 14 } mapId={ 'kotha-434221' }>
+											<AdvancedMarker position={ center } draggable={ true } onDragEnd={ onDragEnd } />
+										</Map>
+									) }
+								</APIProvider>
 							</div>
 
-							<div className="form-group mb--0">
+							<div className="form-group tw-mt-8 mb--0">
 								<input type="submit" className="axil-btn" value="Save Changes" />
 							</div>
 						</div>
