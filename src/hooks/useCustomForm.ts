@@ -66,15 +66,33 @@ export const useCustomForm = <T extends FieldValues>(options = {}) => {
 	}
 
 	const api = async <R>(url: string, options: RequestOptions = {}) => {
-		options.headers = {
-			Accept: 'application/json',
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${localStorage.getItem('token') ?? ''}`,
-			...options.headers,
+		const { body } = options
+
+		// Type guard to ensure `body` is an object before using `instanceof`
+		const isFormData =
+			body && typeof body === 'object' && body instanceof FormData
+
+		if (!isFormData) {
+			// If the body is not FormData, set headers for JSON
+			options.headers = {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('token') ?? ''}`,
+				...options.headers,
+			}
+		} else {
+			// Remove 'Content-Type' header for FormData as it will be set automatically by the browser
+			options.headers = {
+				Authorization: `Bearer ${localStorage.getItem('token') ?? ''}`,
+				...options.headers,
+			}
 		}
 
 		try {
-			const response = await fetch(url, options)
+			const response = await fetch(
+				`${import.meta.env.VITE_BASE_URL}/${url}`,
+				options
+			)
 			const data = await response.json()
 
 			if (!response.ok) {

@@ -14,7 +14,7 @@ const KothaExploreCard = ({ kotha }: KothaExploreCardProps) => {
 					<div className="thumbnail tw-w-[300px] tw-h-[200px]">
 						<img data-sal-delay="150" data-sal-duration="800" loading="lazy"
 							className="main-img tw-w-full tw-h-full tw-object-cover tw-rounded-[6px]"
-							src={ `${import.meta.env.VITE_BASE_URL}/storage/${kotha.images[0].image_url}` }
+							src={ `${import.meta.env.VITE_BASE_URL}/storage/${kotha.images[0]?.image_url}` }
 							alt={ kotha.title } />
 						<div className="label-block label-left">
 							<div className="product-badget">{ kotha.category.name }</div>

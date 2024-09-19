@@ -1,12 +1,10 @@
-import * as React from "react"
-
-import { cn } from "@/lib/utils"
-import { FieldError } from "react-hook-form"
+import * as React from "react";
+import { FieldError } from "react-hook-form";
 
 export interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
-  error?: FieldError | undefined
-  label: string
+  error?: FieldError | any;  // Allow for more flexibility with error types
+  label: string;
 }
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
@@ -15,17 +13,21 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       <>
         <div className="form-group">
           <label>{ label }</label>
-          <textarea { ...props }></textarea>
+          <textarea
+            className={ `form-control ${error ? "border-red-500" : ""}` }
+            ref={ ref }
+            { ...props }
+          />
         </div>
         { error && (
-          <p className="tw-text-red-500 tw-text-xs mt-1">
-            { error.message }
+          <p className="b3 mt--10 tw-text-red-500">
+            { error?.message && typeof error.message === 'string' ? error.message : "Invalid input" }
           </p>
         ) }
       </>
-    )
+    );
   }
-)
-Textarea.displayName = "Textarea"
+);
+Textarea.displayName = "Textarea";
 
-export { Textarea }
+export { Textarea };

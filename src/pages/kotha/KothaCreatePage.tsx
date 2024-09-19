@@ -6,6 +6,8 @@ import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AdvancedMarker, APIProvider, Map } from '@vis.gl/react-google-maps'
 import { useEffect, useState } from 'react'
+import { DevTool } from '@hookform/devtools'
+import { toast } from 'sonner'
 
 const KothaCreatePage = () => {
 	const [center, setCenter] = useState<google.maps.LatLngLiteral | null>(null);
@@ -40,24 +42,42 @@ const KothaCreatePage = () => {
 		// handleClose()
 	}
 
-	const createTaskSchema = z.object({
-		name: z.string().min(2).max(100),
-		description: z.string().min(10).max(500),
-		paymentType: z.enum(["lumsum", "hourly"], {
-			required_error: "Type is required",
-			// invalid_error: "Select Type",
-		}),
-		weight: z.preprocess(
-			(val) => Number(val),
-			z
-				.number()
-				.min(1, "Weight must be at least 1")
-				.max(100, "Weight must be at most 100")
-		),
-		amount: z.preprocess(
-			(val) => Number(val),
-			z.number().min(1, "Amount must be at least 1")
-		),
+	const MAX_FILE_SIZE = 1024 * 1024 * 5;
+	const ACCEPTED_IMAGE_MIME_TYPES = [
+		"image/jpeg",
+		"image/jpg",
+		"image/png",
+		"image/webp",
+	];
+
+	const createKothaSchema = z.object({
+		title: z.string().min(3).max(255),
+		description: z.string().min(3).max(800).optional().or(z.literal('')),
+		purpose: z.string(),
+		category: z.string().transform(value => Number(value)),
+		district: z.string().transform(value => Number(value)),
+		negotiable: z.string().transform(val => val === "1").transform(val => Number(val)),
+		price: z.string().transform(value => Number(value)),
+		images: z
+			.any()
+			.refine((files) => {
+				return files?.[0]?.size <= MAX_FILE_SIZE;
+			}, `Max image size is 5MB.`)
+			.refine(
+				(files) => ACCEPTED_IMAGE_MIME_TYPES.includes(files?.[0]?.type),
+				"Only .jpg, .jpeg, .png and .webp formats are supported."
+			),
+		// facilities
+		kitchen: z.string().transform(val => val === "1").transform(val => Number(val)),
+		bed_room: z.string().min(1, { message: "Bedroom is required" }).transform(value => Number(value)),
+		parking: z.string().transform(val => val === "1").transform(val => Number(val)),
+		bathroom: z.string().min(1, { message: "Bedroom is required" }).transform(value => Number(value)),
+		balcony: z.string().transform(val => val === "1").transform(val => Number(val)),
+		water_facility: z.string().transform(val => val === "1").transform(val => Number(val)),
+		rental_floor: z.string().transform(value => Number(value)),
+		// contacts
+		number: z.string().length(10, { message: 'Phone number should contain 10 digits' }).transform(value => Number(value)),
+		alternative_number: z.string().length(10, { message: 'Phone number should contain 10 digits' }).transform(value => Number(value)).optional().or(z.literal('')),
 	})
 
 	const {
@@ -70,54 +90,82 @@ const KothaCreatePage = () => {
 		reset,
 		control,
 	} = useCustomForm({
-		resolver: zodResolver(createTaskSchema),
+		resolver: zodResolver(createKothaSchema),
 	})
 
-	// const onSubmit = async (data) => {
-	// 	try {
-	// 		await api(
-	// 			`http://${window.location.hostname}:5000/projects/scopes/tasks/add`,
-	// 			{
-	// 				method: "POST",
-	// 				body: JSON.stringify({ ...data, projectId, scopeId }),
-	// 			}
-	// 		)
-	// 		reset()
-	// 		// handleClose()
-	// 		toast.success("Successfully added")
-	// 	} catch (error) {
-	// 		toast.error("Failed to add task")
-	// 	}
-	// }
+	const onSubmit = async (data: any) => {
+		try {
+			if (!data.alternative_number) {
+				delete data.alternative_number;
+			}
+
+			if (!data.description) {
+				delete data.description;
+			}
+
+			// Create FormData object
+			const formData = new FormData();
+
+			// Append all form fields to FormData
+			Object.keys(data).forEach((key) => {
+				if (key === "images") {
+					// Handle multiple image files
+					for (let i = 0; i < data.images.length; i++) {
+						formData.append("images[]", data.images[i]); // Use "images[]" if sending an array of files
+					}
+				} else {
+					formData.append(key, data[key]);
+				}
+			});
+
+			// Append latitude and longitude to formData
+			if (center) {
+				formData.append("latitude", center.lat.toString());
+				formData.append("longitude", center.lng.toString());
+			}
+
+			// Make the API request
+			await api(`api/kotha`, {
+				method: "POST",
+				body: formData, // Send FormData instead of JSON
+			});
+
+			reset();
+			toast.success("Successfully added");
+		} catch (error) {
+			toast.error("Failed to create kotha");
+		}
+	};
+
 
 	return (
 		<div className='p-4'>
 
 			<div className="col-lg-9">
 				<div className="axil-dashboard-account">
-					<form className="account-details-form">
+					<form className="account-details-form" onSubmit={ handleSubmit(onSubmit) } noValidate>
 						<div className="row">
 							<h5 className="title tw-font-semibold tw-text-3xl tw-mb-8">Basic Information</h5>
 
 							<div className="col-12">
-								<Input label='Title' />
+								<Input label='Title' { ...register('title') } error={ errors.title } />
 							</div>
 
 							<div className="col-12">
-								<Textarea label='Description' rows={ 2 } placeholder="e.g. near GoldenGate, kathmandu." />
+								<Textarea label='Description (Optional)' rows={ 2 } placeholder="e.g. near GoldenGate, kathmandu." { ...register('description') } error={ errors.description } />
 							</div>
 
 							<div className="col-4">
-								<Select label='Purpose'>
-									<option value="1">Rent</option>
-									<option value="1">Lease</option>
-									<option value="1">United Arab Emirates (UAE)</option>
-									<option value="1">Australia</option>
+								<Select label='Purpose' { ...register('purpose') } error={ errors.purpose }>
+									<option value="rent">Rent</option>
+									<option value="rent">Lease</option>
+									<option value="rent">United Arab Emirates (UAE)</option>
+									<option value="rent">Australia</option>
 								</Select>
 							</div>
 
 							<div className="col-4">
-								<Select label='Category'>
+								<Select label='Category' { ...register('category') } error={ errors.category }>
 									<option value="1">2BHK</option>
 									<option value="1">3BHK</option>
 									<option value="1">United Arab Emirates (UAE)</option>
@@ -126,55 +174,67 @@ const KothaCreatePage = () => {
 							</div>
 
 							<div className="col-4">
-								<Select label='District'>
+								<Select label='District' { ...register('district') } error={ errors.district }>
 									<option value="1">Kathmandu</option>
 									<option value="1">Udayapur</option>
 								</Select>
 							</div>
 
+							<div className="col-4">
+								<Input label='Images' type='file' { ...register('images') } error={ errors.images } multiple />
+							</div>
+
+							<div className="col-4">
+								<Select label='Negotiation' { ...register('negotiable') } error={ errors.negotiable }>
+									<option value="1">Yes</option>
+									<option value="1">No</option>
+								</Select>
+							</div>
+
+							<div className="col-4">
+								<Input label='Price' placeholder='eg: 2999' type='number' { ...register('price') } error={ errors.price } />
+							</div>
+
 							<h5 className="title tw-font-semibold tw-text-3xl tw-mb-8">Additional Information about Kotha</h5>
 
 							<div className="col-4">
-								<Select label='Kitchen'>
+								<Select label='Kitchen' { ...register('kitchen') } error={ errors.kitchen }>
+									<option value="1">Yes</option>
+									<option value="0">No</option>
+								</Select>
+							</div>
+
+							<div className="col-4">
+								<Input label='bed_room' placeholder='eg: 2' type='number' { ...register('bed_room') } error={ errors.bed_room } />
+							</div>
+
+							<div className="col-4">
+								<Input label='Bathroom' placeholder='eg: 3' type='number' { ...register('bathroom') } error={ errors.bathroom } />
+							</div>
+
+							<div className="col-4">
+								<Select label='Parking' { ...register('parking') } error={ errors.parking }>
+									<option value="1">Yes</option>
+									<option value="0">No</option>
+								</Select>
+							</div>
+
+							<div className="col-4">
+								<Select label='Balcony' { ...register('balcony') } error={ errors.balcony }>
+									<option value="1">Yes</option>
+									<option value="0">No</option>
+								</Select>
+							</div>
+
+							<div className="col-4">
+								<Select label='Water Supply' { ...register('water_facility') } error={ errors.water_facility }>
 									<option value="1">Yes</option>
 									<option value="1">No</option>
 								</Select>
 							</div>
 
 							<div className="col-4">
-								<Input label='Bedroom' placeholder='eg: 2' type='number' />
-							</div>
-
-							<div className="col-4">
-								<Select label='Bathroom'>
-									<option value="1">Yes</option>
-									<option value="1">No</option>
-								</Select>
-							</div>
-
-							<div className="col-4">
-								<Select label='Parking'>
-									<option value="1">Yes</option>
-									<option value="1">No</option>
-								</Select>
-							</div>
-
-							<div className="col-4">
-								<Select label='Balcony'>
-									<option value="1">Yes</option>
-									<option value="1">No</option>
-								</Select>
-							</div>
-
-							<div className="col-4">
-								<Select label='Water Supply'>
-									<option value="1">Yes</option>
-									<option value="1">No</option>
-								</Select>
-							</div>
-
-							<div className="col-4">
-								<Select label='Rental Floor'>
+								<Select label='Rental Floor' { ...register('rental_floor') } error={ errors.rental_floor }>
 									<option value="1">Ground</option>
 									<option value="1">First</option>
 								</Select>
@@ -183,21 +243,14 @@ const KothaCreatePage = () => {
 							<h5 className="title tw-font-semibold tw-text-3xl tw-mb-8">Contact Informations</h5>
 
 							<div className="col-6">
-								<Input label='Phone Number' type='number' />
+								<Input label='Phone Number' type='number' { ...register('number') } error={ errors.number } />
 							</div>
 
 							<div className="col-6">
-								<Input label='Alternative Phone Number (Optional)' type='number' />
+								<Input label='Alternative Phone Number (Optional)' type='number' { ...register('alternative_number') } error={ errors.alternative_number } />
 							</div>
 
 							<h5 className="title tw-font-semibold tw-text-3xl tw-mb-8">Location in Map</h5>
-
-							<div className="col-6">
-								<Select label='District'>
-									<option value="1">Kathmandu</option>
-									<option value="1">Udayapur</option>
-								</Select>
-							</div>
 
 							<div className="col-12 tw-h-[400px]">
 								<APIProvider apiKey={ 'AIzaSyBt4cUvR9HOpwhNs_edkOTaYdRaHfgnfCs' }>
@@ -210,9 +263,10 @@ const KothaCreatePage = () => {
 							</div>
 
 							<div className="form-group tw-mt-8 mb--0">
-								<input type="submit" className="axil-btn" value="Save Changes" />
+								<input type="submit" value="Register" />
 							</div>
 						</div>
+						<DevTool control={ control } placement='top-right'></DevTool>
 					</form>
 				</div>
 			</div>
