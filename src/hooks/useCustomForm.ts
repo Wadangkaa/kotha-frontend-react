@@ -49,7 +49,9 @@ export const useCustomForm = <T extends FieldValues>(options = {}) => {
 	) => {
 		let errorMessage = 'Something went wrong'
 
-		if (errorMessages[response.status]) {
+		if (data.message) {
+			errorMessage = data.message
+		} else if (errorMessages[response.status]) {
 			errorMessage = errorMessages[response.status]
 		} else if (response.status === 422) {
 			errorMessage = data.message
@@ -59,8 +61,6 @@ export const useCustomForm = <T extends FieldValues>(options = {}) => {
 					message: data.errors[key],
 				})
 			})
-		} else {
-			errorMessage = data.message
 		}
 		throw new Error(errorMessage)
 	}

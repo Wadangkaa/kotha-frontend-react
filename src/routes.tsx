@@ -7,6 +7,7 @@ import KothaDetailPage from './pages/kotha/KothaDetailPage'
 import SearchInRadius from './pages/map/SearchInRadius'
 import KothaCreatePage from './pages/kotha/KothaCreatePage'
 import AccountLayout from './pages/accounts/AccountLayout'
+import LogoutPage from './pages/LogoutPage'
 
 export const router = createBrowserRouter([
 	{
@@ -48,6 +49,10 @@ export const router = createBrowserRouter([
 	{
 		path: '/login',
 		element: <LoginPage />,
+	},
+	{
+		path: '/logout',
+		element: <LogoutPage />,
 	},
 	{
 		path: '/users',

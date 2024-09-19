@@ -80,6 +80,8 @@ const KothaCreatePage = () => {
 		alternative_number: z.string().length(10, { message: 'Phone number should contain 10 digits' }).transform(value => Number(value)).optional().or(z.literal('')),
 	})
 
+	type KothaFormValue = z.infer<typeof createKothaSchema>
+
 	const {
 		register,
 		handleSubmit,
@@ -93,7 +95,7 @@ const KothaCreatePage = () => {
 		resolver: zodResolver(createKothaSchema),
 	})
 
-	const onSubmit = async (data: any) => {
+	const onSubmit = async (data: KothaFormValue) => {
 		try {
 			if (!data.alternative_number) {
 				delete data.alternative_number;

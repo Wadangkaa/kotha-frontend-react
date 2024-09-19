@@ -1,7 +1,22 @@
 import SidebarFilter from "@/components/SidebarFilter"
+import { setAuth } from "@/redux/slices/authSlice";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Outlet } from "react-router-dom"
 
 const MainLayout = () => {
+	const dispatch = useDispatch()
+	const authStore = useSelector(state => state.auth)
+
+	useEffect(() => {
+		const authUser = localStorage.getItem("user");
+		const token = localStorage.getItem("token");
+
+		if (authUser && !authStore.user) {
+			dispatch(setAuth({ user: authUser, token: token }));
+		}
+	}, [authStore.user, dispatch]);
+
 	const openMyAccountDropdown = () => {
 		const dropdown = document.getElementById("my-account-dropdown");
 		if (dropdown) {
@@ -10,6 +25,7 @@ const MainLayout = () => {
 			console.error('Element with id "my-account-dropdown" not found');
 		}
 	};
+
 	return (
 		<>
 			<div>
@@ -24,20 +40,20 @@ const MainLayout = () => {
 							<div className="container-fluid">
 								<div className="header-navbar">
 									<div className="header-brand">
-										<a href="/" className="logo logo-dark">
+										<NavLink to="/" className="logo logo-dark">
 											<img src="/assets/images/logo/kotha-horizontal.png" alt="Site Logo" className="tw-h-[50px]" />
-										</a>
-										<a href="index.html" className="logo logo-light">
+										</NavLink>
+										<NavLink to="/" className="logo logo-light">
 											<img src="assets/images/logo/logo-light.png" alt="Site Logo" />
-										</a>
+										</NavLink>
 									</div>
 									<div className="header-main-nav">
 										<nav className="mainmenu-nav">
 											<button className="mobile-close-btn mobile-nav-toggler"><i className="fas fa-times"></i></button>
 											<div className="mobile-nav-brand">
-												<a href="index.html" className="logo">
+												<NavLink to="/" className="logo">
 													<img src="/assets/images/logo/logo.png" alt="Site Logo" />
-												</a>
+												</NavLink>
 											</div>
 											<ul className="mainmenu">
 												{/* <li>
@@ -76,25 +92,25 @@ const MainLayout = () => {
 													<i className="far fa-user"></i>
 												</a>
 												<div className="my-account-dropdown" id="my-account-dropdown">
-													<span className="title">QUICK LINKS</span>
-													<ul>
-														<li>
-															<a href="/account">My Account</a>
-														</li>
-														<li>
-															<a href="#">Initiate return</a>
-														</li>
-														<li>
-															<a href="#">Support</a>
-														</li>
-														<li>
-															<a href="#">Language</a>
-														</li>
-													</ul>
-													<div className="login-btn">
-														<a href="sign-in.html" className="axil-btn btn-bg-primary">Login</a>
-													</div>
-													<div className="reg-footer text-center">No account yet? <a href="sign-up.html" className="btn-link">REGISTER HERE.</a></div>
+													{ authStore.isAuthenticated ? (
+														<>
+															<ul>
+																<li>
+																	<NavLink to="/account">My Account</NavLink>
+																</li>
+															</ul>
+															<div className="login-btn">
+																<NavLink to="/logout" className="axil-btn btn-bg-primary">Logout</NavLink>
+															</div>
+														</>
+													) : (
+														<>
+															<div className="login-btn">
+																<NavLink to="/login" className="axil-btn btn-bg-primary">Login</NavLink>
+															</div>
+															<div className="reg-footer text-center">No account yet? <a href="sign-up.html" className="btn-link">REGISTER HERE.</a></div>
+														</>
+													) }
 												</div>
 											</li>
 											<li className="axil-mobile-toggle">

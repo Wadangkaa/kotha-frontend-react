@@ -3,9 +3,7 @@ import { ErrorResponse, RequestOptions } from '@/types/commonTypes'
 export const defaultHeaders = {
 	Accept: 'application/json',
 	'Content-Type': 'application/json',
-	// Authorization: `Bearer ${localStorage.getItem('token') ?? ''}`,
-
-	Authorization: `Bearer 10|ZAiPaq2gWyZg6CXGLmJWE32r4wBTKnMVkkfCKFHG0ee2b58d`,
+	Authorization: `Bearer ${localStorage.getItem('token') ?? ''}`,
 }
 
 export const handleErrorResponse = async (
