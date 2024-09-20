@@ -13,7 +13,7 @@ const MainLayout = () => {
 		const token = localStorage.getItem("token");
 
 		if (authUser && !authStore.user) {
-			dispatch(setAuth({ user: authUser, token: token }));
+			dispatch(setAuth({ user: JSON.parse(authUser), token: token }));
 		}
 	}, [authStore.user, dispatch]);
 

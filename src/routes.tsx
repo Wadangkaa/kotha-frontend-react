@@ -17,6 +17,7 @@ import Posts from './components/admin/Posts'
 import PostDetail from './components/admin/PostDetail'
 import AdminKothaDetailPage from './pages/kotha/AdminKothaDetailPage'
 import AdminRoutes from './utilities/AdminRoutes'
+import UserDashboard from './components/UserDashboard'
 
 export const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -27,7 +28,7 @@ export const router = createBrowserRouter(
 				<Route path="search-in-map" element={ <SearchInRadius /> } />
 				<Route element={ <AuthRoutes /> }>
 					<Route path="account" element={ <AccountLayout /> }>
-						<Route index element={ <>Hello world</> } />
+						<Route index element={ <UserDashboard /> } />
 						<Route path="posts" element={ <MyPostsPage /> } />
 						<Route path="create-kotha" element={ <KothaCreatePage /> } />
 					</Route>
