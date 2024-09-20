@@ -7,6 +7,7 @@ import MainLayout from './pages/layouts/MainLayout'
 import KothaDetailPage from './pages/kotha/KothaDetailPage'
 import SearchInRadius from './pages/map/SearchInRadius'
 import KothaCreatePage from './pages/kotha/KothaCreatePage'
+import KothaUpdatePage from './pages/kotha/KothaUpdatePage'
 import AccountLayout from './pages/accounts/AccountLayout'
 import LogoutPage from './pages/LogoutPage'
 import DashboardPage from './pages/DashboardPage'
@@ -30,6 +31,7 @@ export const router = createBrowserRouter(
 					<Route path="account" element={ <AccountLayout /> }>
 						<Route index element={ <UserDashboard /> } />
 						<Route path="posts" element={ <MyPostsPage /> } />
+						<Route path="posts/:id/update" element={ <KothaUpdatePage /> } />
 						<Route path="create-kotha" element={ <KothaCreatePage /> } />
 					</Route>
 				</Route>

@@ -1,19 +1,49 @@
 import { Input } from '@/components/ui/user/input'
 import { Textarea } from '@/components/ui/user/textarea'
 import Select from "@/components/ui/user/select"
-import { useCustomForm } from '@/hooks/useCustomForm'
+import { ApiResponse, useCustomForm } from '@/hooks/useCustomForm'
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AdvancedMarker, APIProvider, Map } from '@vis.gl/react-google-maps'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { useNavigate } from 'react-router-dom'
+import { apiFetch } from '@/utilities/apiFetch'
 
 const KothaCreatePage = () => {
 	const navigate = useNavigate()
 	const [center, setCenter] = useState<google.maps.LatLngLiteral | null>(null);
+	const [purpose, setPurpose] = useState([])
+	const [district, setDistrict] = useState([])
+	const [categories, setCategories] = useState([])
+	const [rentalFloors, setRentalFloors] = useState([])
+
+	const getData = async () => {
+		try {
+			const [categoriesResponse, purposeResponse, districtResponse, rentalFloorResponse] = await Promise.all([
+				apiFetch('api/kotha/category/all'),
+				apiFetch('api/kotha/purpose/all'),
+				apiFetch('api/kotha/district/all'),
+				apiFetch('api/kotha/rental-floor/all'),
+			]);
+
+			// Assuming each API response has a .json() method
+			const categories = await categoriesResponse.data;
+			const purpose = await purposeResponse.data;
+			const district = await districtResponse.data;
+			const rentalFloors = await rentalFloorResponse.data;
+
+			setCategories(categories);
+			setPurpose(purpose);
+			setDistrict(district);
+			setRentalFloors(rentalFloors);
+		} catch (error) {
+			console.error('Failed to fetch data:', error);
+		}
+	};
 
 	useEffect(() => {
+		getData()
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(
 				(position) => {
@@ -162,26 +192,25 @@ const KothaCreatePage = () => {
 
 							<div className="col-4">
 								<Select label='Purpose' { ...register('purpose') } error={ errors.purpose }>
-									<option value="rent">Rent</option>
-									<option value="rent">Lease</option>
-									<option value="rent">United Arab Emirates (UAE)</option>
-									<option value="rent">Australia</option>
+									{ purpose.map((purpose, index) => (
+										<option value={ purpose } key={ index }>{ purpose }</option>
+									)) }
 								</Select>
 							</div>
 
 							<div className="col-4">
 								<Select label='Category' { ...register('category') } error={ errors.category }>
-									<option value="1">2BHK</option>
-									<option value="1">3BHK</option>
-									<option value="1">United Arab Emirates (UAE)</option>
-									<option value="1">Australia</option>
+									{ categories.map((category: Object, index) => (
+										<option value={ category.id } key={ index }>{ category.name }</option>
+									)) }
 								</Select>
 							</div>
 
 							<div className="col-4">
 								<Select label='District' { ...register('district') } error={ errors.district }>
-									<option value="1">Kathmandu</option>
-									<option value="1">Udayapur</option>
+									{ district.map((district, index) => (
+										<option value={ district.id } key={ index }>{ district.name }</option>
+									)) }
 								</Select>
 							</div>
 
@@ -192,7 +221,7 @@ const KothaCreatePage = () => {
 							<div className="col-4">
 								<Select label='Negotiation' { ...register('negotiable') } error={ errors.negotiable }>
 									<option value="1">Yes</option>
-									<option value="1">No</option>
+									<option value="0">No</option>
 								</Select>
 							</div>
 
@@ -234,14 +263,15 @@ const KothaCreatePage = () => {
 							<div className="col-4">
 								<Select label='Water Supply' { ...register('water_facility') } error={ errors.water_facility }>
 									<option value="1">Yes</option>
-									<option value="1">No</option>
+									<option value="0">No</option>
 								</Select>
 							</div>
 
 							<div className="col-4">
 								<Select label='Rental Floor' { ...register('rental_floor') } error={ errors.rental_floor }>
-									<option value="1">Ground</option>
-									<option value="1">First</option>
+									{ rentalFloors.map((rentalFloor, index) => (
+										<option value={ rentalFloor.id } key={ index }>{ rentalFloor.floor }</option>
+									)) }
 								</Select>
 							</div>
 

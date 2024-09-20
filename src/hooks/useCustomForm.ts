@@ -33,6 +33,7 @@ export const useCustomForm = <T extends FieldValues>(options = {}) => {
 		formState,
 		setError,
 		clearErrors,
+		setValue,
 		reset,
 	} = form
 	const { errors, isDirty, isSubmitting } = formState
@@ -124,6 +125,7 @@ export const useCustomForm = <T extends FieldValues>(options = {}) => {
 		register,
 		control,
 		errors,
+		setValue,
 		clearErrors,
 		isDirty,
 		isSubmitting,

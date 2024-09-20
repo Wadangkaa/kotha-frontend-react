@@ -2,7 +2,7 @@ import { ApiResponseWithPagination } from "@/types/commonTypes"
 import { Kotha } from "@/types/models"
 import { apiFetch } from "@/utilities/apiFetch"
 import { useEffect, useState } from "react"
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -17,6 +17,7 @@ import {
 import { toast } from "sonner"
 
 const MyPostsPage = () => {
+	const navigate = useNavigate()
 	const [posts, setPosts] = useState<Kotha[]>([])
 
 	const fetchSelfPosts = async () => {
@@ -35,6 +36,10 @@ const MyPostsPage = () => {
 	useEffect(() => {
 		fetchSelfPosts()
 	}, [])
+
+	const handleKothaEdit = (kotha: Kotha) => {
+		navigate(`/account/posts/${kotha.id}/update`)
+	}
 
 	return (
 		<>
@@ -90,7 +95,7 @@ const MyPostsPage = () => {
 													</AlertDialogFooter>
 												</AlertDialogContent>
 											</AlertDialog>
-
+											<div onClick={ () => handleKothaEdit(kotha) } className="axil-btn view-btn tw-rounded-xl tw-flex tw-items-center"><i className="fa-solid fa-edit"></i></div>
 										</td>
 									</tr>
 								))
