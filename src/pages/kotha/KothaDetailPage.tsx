@@ -17,7 +17,6 @@ const KothaDetailPage = () => {
 	const { id } = useParams();
 	const [kotha, setKotha] = useState<KothaDetail | null>(null);
 
-	// Correct typing for nav states and refs
 	const [nav1, setNav1] = useState<Slider | null>(null);
 	const [nav2, setNav2] = useState<Slider | null>(null);
 	const sliderRef1 = useRef<Slider | null>(null);
@@ -43,7 +42,6 @@ const KothaDetailPage = () => {
 				data-testid="loader"
 			/>
 		</div>
-			;
 	}
 
 	return (

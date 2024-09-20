@@ -12,65 +12,8 @@ import LogoutPage from './pages/LogoutPage'
 import DashboardPage from './pages/DashboardPage'
 import MyPostsPage from './pages/MyPostsPage'
 import AuthRoutes from './utilities/AuthRoutes'
-
-// export const router = createBrowserRouter([
-// 	{
-// 		path: '/',
-// 		element: <MainLayout />,
-// 		children: [
-// 			{
-// 				path: '',
-// 				element: <IndexPage />,
-// 			},
-// 			{
-// 				path: '/details/:id',
-// 				element: <KothaDetailPage />
-// 			},
-// 			{
-// 				path: '/search-in-map',
-// 				element: <SearchInRadius />
-// 			},
-// 			{
-// 				path: '/kotha/create',
-// 				element: <KothaCreatePage />,
-// 			},
-// 			{
-// 				path: '/account',
-// 				element: <AccountLayout />,
-// 				children: [
-// 					{
-// 						path: '',
-// 						element: <DashboardPage />
-// 					},
-// 					{
-// 						path: 'posts',
-// 						element: <MyPostsPage />
-// 					},
-// 					{
-// 						path: 'create-kotha',
-// 						element: <KothaCreatePage />
-// 					}
-// 				]
-// 			}
-// 		]
-// 	},
-// 	{
-// 		path: '/login',
-// 		element: <LoginPage />,
-// 	},
-// 	{
-// 		path: '/logout',
-// 		element: <LogoutPage />,
-// 	},
-// 	{
-// 		path: '/register',
-// 		element: <RegisterPage />,
-// 	},
-// 	{
-// 		path: '/users',
-// 		element: <UserListPage />,
-// 	},
-// ])
+import Dashboard from './components/admin/Dasboard'
+import Posts from './components/admin/Posts'
 
 export const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -81,7 +24,7 @@ export const router = createBrowserRouter(
 				<Route path="search-in-map" element={ <SearchInRadius /> } />
 				<Route element={ <AuthRoutes /> }>
 					<Route path="account" element={ <AccountLayout /> }>
-						<Route index element={ <DashboardPage /> } />
+						<Route index element={ <>Hello world</> } />
 						<Route path="posts" element={ <MyPostsPage /> } />
 						<Route path="create-kotha" element={ <KothaCreatePage /> } />
 					</Route>
@@ -90,6 +33,13 @@ export const router = createBrowserRouter(
 			</Route>
 			<Route path="/login" element={ <LoginPage /> } />
 			<Route path="/register" element={ <RegisterPage /> } />
+
+			<Route path="admin" element={ <DashboardPage /> }>
+				<Route index path='dashboard' element={ <Dashboard /> } />
+				<Route path="posts" element={ <Posts /> } />
+			</Route>
+
+			<Route path="*" element={ <h1>404 Not Found</h1> } />
 		</Route>
 	)
 );
