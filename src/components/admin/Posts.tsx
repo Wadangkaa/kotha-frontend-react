@@ -1,28 +1,42 @@
-import React, { useState } from 'react';
-
-// Example posts data
-const posts = [
-	{ id: 1, title: 'Post 1', status: 'pending' },
-	{ id: 2, title: 'Post 2', status: 'approved' },
-	{ id: 3, title: 'Post 3', status: 'rejected' },
-	{ id: 4, title: 'Post 4', status: 'pending' },
-	// Add more posts here...
-];
+import { useState, useEffect } from 'react';
+import { apiFetch } from '@/utilities/apiFetch';
+import { Kotha } from '@/types/models';
+import { ApiResponseWithPagination } from '@/types/commonTypes';
 
 const PostListPage = () => {
-	const [statusFilter, setStatusFilter] = useState<string | null>(null);
+	const [posts, setPosts] = useState<Kotha[]>([]);
+	const [statusFilter, setStatusFilter] = useState<number | null>(null);
+	const [loading, setLoading] = useState(false);
+
+	// Fetch posts from API
+	const fetchPosts = async () => {
+		setLoading(true);
+		try {
+			const response = await apiFetch<ApiResponseWithPagination<Kotha[]>>('api/admin/kotha');
+			setPosts(response.data.data);
+		} catch (error) {
+			console.error('Failed to fetch posts', error);
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	useEffect(() => {
+		fetchPosts();
+	}, []);
 
 	// Calculate counts for each status
-	const pendingCount = posts.filter(post => post.status === 'pending').length;
-	const approvedCount = posts.filter(post => post.status === 'approved').length;
-	const rejectedCount = posts.filter(post => post.status === 'rejected').length;
+	const pendingCount = posts.filter(post => post.status === 1).length;
+	const approvedCount = posts.filter(post => post.status === 2).length;
+	const rejectedCount = posts.filter(post => post.status === 3).length;
 
-	// Filter the posts based on the selected status
-	const filteredPosts = statusFilter ? posts.filter(post => post.status === statusFilter) : posts;
+	// Filter posts based on selected status
+	const filteredPosts = statusFilter
+		? posts.filter(post => post.status === statusFilter)
+		: posts;
 
 	return (
 		<div className="tw-container tw-mx-auto tw-px-4">
-			{/* Tabs/Chips for filtering */ }
 			<div className="tw-flex tw-gap-4 tw-mb-4">
 				<button
 					onClick={ () => setStatusFilter(null) }
@@ -31,26 +45,27 @@ const PostListPage = () => {
 					All
 				</button>
 				<button
-					onClick={ () => setStatusFilter('pending') }
+					onClick={ () => setStatusFilter(1) }
 					className="tw-px-4 tw-py-2 tw-bg-yellow-200 tw-rounded"
 				>
 					Pending ({ pendingCount })
 				</button>
 				<button
-					onClick={ () => setStatusFilter('approved') }
+					onClick={ () => setStatusFilter(2) }
 					className="tw-px-4 tw-py-2 tw-bg-green-200 tw-rounded"
 				>
 					Approved ({ approvedCount })
 				</button>
 				<button
-					onClick={ () => setStatusFilter('rejected') }
+					onClick={ () => setStatusFilter(3) }
 					className="tw-px-4 tw-py-2 tw-bg-red-200 tw-rounded"
 				>
 					Rejected ({ rejectedCount })
 				</button>
 			</div>
 
-			{/* Posts table */ }
+			{ loading && <div>Loading...</div> }
+
 			<table className="tw-table-auto tw-w-full tw-border-collapse tw-border tw-border-gray-200">
 				<thead>
 					<tr>
@@ -60,11 +75,11 @@ const PostListPage = () => {
 					</tr>
 				</thead>
 				<tbody>
-					{ filteredPosts.map(post => (
+					{ filteredPosts.map((post) => (
 						<tr key={ post.id }>
 							<td className="tw-border tw-border-gray-300 tw-px-4 tw-py-2">{ post.id }</td>
 							<td className="tw-border tw-border-gray-300 tw-px-4 tw-py-2">{ post.title }</td>
-							<td className="tw-border tw-border-gray-300 tw-px-4 tw-py-2">{ post.status }</td>
+							<td className="tw-border tw-border-gray-300 tw-px-4 tw-py-2">{ post.status_name }</td>
 						</tr>
 					)) }
 				</tbody>

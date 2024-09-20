@@ -20,6 +20,8 @@ export type Kotha = {
 	district: District
 	negotiable: number
 	purpose: string
+	status: number
+	status_name: string
 	created_at: Date
 }
 
