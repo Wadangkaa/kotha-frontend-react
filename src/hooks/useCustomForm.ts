@@ -1,3 +1,4 @@
+import { AlignTopIcon } from '@radix-ui/react-icons'
 import { useForm, FieldValues, Path } from 'react-hook-form'
 import { toast } from 'sonner'
 
@@ -10,7 +11,7 @@ type RequestOptions = {
 type ErrorResponse = {
 	status: number
 	message: string
-	errors: { [key: string]: string }
+	error: { [key: string]: string }
 }
 
 export type ApiResponse<T> = {
@@ -53,12 +54,13 @@ export const useCustomForm = <T extends FieldValues>(options = {}) => {
 			errorMessage = data.message
 		} else if (errorMessages[response.status]) {
 			errorMessage = errorMessages[response.status]
-		} else if (response.status === 422) {
+		}
+		if (response.status === 422) {
 			errorMessage = data.message
-			Object.keys(data.errors).forEach((key: string) => {
+			Object.keys(data.error).forEach((key: string) => {
 				setError(key as Path<T>, {
 					type: 'custom',
-					message: data.errors[key],
+					message: data.error[key][0],
 				})
 			})
 		}

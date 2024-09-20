@@ -19,7 +19,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           { ...props }
         />
         { error && (
-          <p className="b3 mt--10 tw-text-red-500">
+          <p className="b3 mt--10 tw-text-red-500" style={ { color: 'red' } }>
             { error?.message && typeof error.message === 'string' ? error.message : "Invalid input" }
           </p>
         ) }

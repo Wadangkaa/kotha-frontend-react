@@ -108,7 +108,7 @@ const MainLayout = () => {
 															<div className="login-btn">
 																<NavLink to="/login" className="axil-btn btn-bg-primary">Login</NavLink>
 															</div>
-															<div className="reg-footer text-center">No account yet? <a href="sign-up.html" className="btn-link">REGISTER HERE.</a></div>
+															<div className="reg-footer text-center">No account yet? <NavLink to="/register" className="btn-link">REGISTER HERE.</NavLink></div>
 														</>
 													) }
 												</div>
