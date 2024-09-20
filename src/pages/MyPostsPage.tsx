@@ -95,7 +95,7 @@ const MyPostsPage = () => {
 													</AlertDialogFooter>
 												</AlertDialogContent>
 											</AlertDialog>
-											<div onClick={ () => handleKothaEdit(kotha) } className="axil-btn view-btn tw-rounded-xl tw-flex tw-items-center"><i className="fa-solid fa-edit"></i></div>
+											{/* <div onClick={ () => handleKothaEdit(kotha) } className="axil-btn view-btn tw-rounded-xl tw-flex tw-items-center"><i className="fa-solid fa-edit"></i></div> */ }
 										</td>
 									</tr>
 								))
