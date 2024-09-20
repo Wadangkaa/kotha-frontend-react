@@ -6,7 +6,7 @@ function DashboardPage() {
 		<>
 			<div className="tw-flex tw-h-screen">
 				<Sidebar />
-				<div className="tw-flex-1 tw-p-6 tw-bg-gray-100">
+				<div className="tw-flex-1 tw-p-6 tw-bg-gray-100 tw-overflow-y-auto">
 					<Outlet />
 				</div>
 			</div>

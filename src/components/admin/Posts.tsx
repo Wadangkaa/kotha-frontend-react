@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { apiFetch } from '@/utilities/apiFetch';
 import { Kotha } from '@/types/models';
 import { ApiResponseWithPagination } from '@/types/commonTypes';
+import { NavLink } from 'react-router-dom';
 
 const PostListPage = () => {
 	const [posts, setPosts] = useState<Kotha[]>([]);
@@ -72,6 +73,7 @@ const PostListPage = () => {
 						<th className="tw-border tw-border-gray-300 tw-px-4 tw-py-2">ID</th>
 						<th className="tw-border tw-border-gray-300 tw-px-4 tw-py-2">Title</th>
 						<th className="tw-border tw-border-gray-300 tw-px-4 tw-py-2">Status</th>
+						<th className="tw-border tw-border-gray-300 tw-px-4 tw-py-2">Actions</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -80,6 +82,9 @@ const PostListPage = () => {
 							<td className="tw-border tw-border-gray-300 tw-px-4 tw-py-2">{ post.id }</td>
 							<td className="tw-border tw-border-gray-300 tw-px-4 tw-py-2">{ post.title }</td>
 							<td className="tw-border tw-border-gray-300 tw-px-4 tw-py-2">{ post.status_name }</td>
+							<td className="tw-border tw-border-gray-300 tw-px-4 tw-py-2">
+								<NavLink to={ `/admin/posts/${post.id}` } className="tw-text-blue-500">Details</NavLink>
+							</td>
 						</tr>
 					)) }
 				</tbody>

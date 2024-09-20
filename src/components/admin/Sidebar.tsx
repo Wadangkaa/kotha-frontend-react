@@ -1,6 +1,11 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 function Sidebar() {
+	const navigate = useNavigate();
+
+	const logout = () => {
+		navigate('/logout')
+	}
 	return (
 		<div className="tw-bg-gray-800 tw-text-white tw-h-full tw-w-80 tw-flex tw-flex-col">
 			<div className="tw-p-6 tw-text-xl tw-font-bold tw-border-b tw-border-gray-700">Admin Dashboard</div>
@@ -13,7 +18,7 @@ function Sidebar() {
 				</li>
 			</ul>
 			<div className="tw-p-4 tw-border-t tw-border-gray-700">
-				<button className="tw-w-full tw-bg-red-600 tw-py-2 tw-rounded hover:tw-bg-red-500">Logout</button>
+				<button onClick={ logout } className="tw-w-full tw-bg-red-600 tw-py-2 tw-rounded hover:tw-bg-red-500">Logout</button>
 			</div>
 		</div>
 	);

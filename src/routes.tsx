@@ -14,6 +14,8 @@ import MyPostsPage from './pages/MyPostsPage'
 import AuthRoutes from './utilities/AuthRoutes'
 import Dashboard from './components/admin/Dasboard'
 import Posts from './components/admin/Posts'
+import PostDetail from './components/admin/PostDetail'
+import AdminKothaDetailPage from './pages/kotha/AdminKothaDetailPage'
 
 export const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -37,6 +39,7 @@ export const router = createBrowserRouter(
 			<Route path="admin" element={ <DashboardPage /> }>
 				<Route index path='dashboard' element={ <Dashboard /> } />
 				<Route path="posts" element={ <Posts /> } />
+				<Route path="posts/:id" element={ <AdminKothaDetailPage /> } />
 			</Route>
 
 			<Route path="*" element={ <h1>404 Not Found</h1> } />
