@@ -3,6 +3,17 @@ import { ApiResponseWithPagination } from "@/types/commonTypes"
 import { Kotha } from "@/types/models"
 import { apiFetch } from "@/utilities/apiFetch"
 import { useEffect, useState } from "react"
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from "@/components/ui/dialog"
+
+import { DevTool } from "@hookform/devtools"
+import RecommendationForm from "@/components/RecommendationForm"
 
 const getKothas = async (): Promise<ApiResponseWithPagination<Kotha[]>> => {
 	return await apiFetch<ApiResponseWithPagination<Kotha[]>>('api/kotha')
@@ -16,6 +27,11 @@ const IndexPage = () => {
 		getKothas().then(response => setKothas(response.data.data))
 	}, [])
 
+	const onSubmit = (e) => {
+		e.preventDefault();
+		alert('Submit')
+	}
+
 	return (
 		<main className="main-wrapper">
 
@@ -26,7 +42,19 @@ const IndexPage = () => {
 							<div className="main-slider-content">
 								<h1 className="title tw-font-semibold">Find Your Perfect Home Today.</h1>
 								<div className="shop-btn">
-									<a href="shop.html" className="axil-btn btn-bg-primary"><i className="far fa-search"></i> Find kotha for me</a>
+
+									<Dialog>
+										<DialogTrigger asChild>
+											<button className="axil-btn btn-bg-primary tw-w-[50%]"><i className="far fa-search"></i> Find kotha for me</button>
+										</DialogTrigger>
+										<DialogContent className="tw-max-w-[50%]">
+											<DialogHeader>
+												<DialogTitle className="tw-text-lg">Enter you preference</DialogTitle>
+												<RecommendationForm />
+											</DialogHeader>
+										</DialogContent>
+									</Dialog>
+
 								</div>
 							</div>
 						</div>
@@ -52,7 +80,7 @@ const IndexPage = () => {
 				</div>
 			</div>
 
-		</main>
+		</main >
 	)
 }
 
