@@ -1,10 +1,11 @@
 
 import { Input } from "@/components/ui/user/input"
-import { useCustomForm } from "@/hooks/useCustomForm"
+import { ApiResponse, useCustomForm } from "@/hooks/useCustomForm"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { toast } from "sonner"
 import { z } from "zod"
 import Select from "@/components/ui/user/select"
+import { Kotha } from "@/types/models"
 
 const userPreferenceSchema = z.object({
 	district: z.string().transform(value => Number(value)),
@@ -18,14 +19,13 @@ const userPreferenceSchema = z.object({
 	max_price: z.string().min(1).transform(val => Number(val)),
 }).refine((data) => data.min_price <= data.max_price, {
 	message: "Min price should be less than or equal to max price",
-	path: ["min_price"], // You can customize the path if needed
+	path: ["min_price"],
 });
 
 
 type UserPreferenceFormValue = z.infer<typeof userPreferenceSchema>
 
-const RecommendationForm = () => {
-
+const RecommendationForm = ({ getRecommendedKotha }: { getRecommendedKotha: (kothas: Kotha[]) => void }) => {
 
 	const {
 		register,
@@ -43,13 +43,14 @@ const RecommendationForm = () => {
 	const onSubmit = async (data: UserPreferenceFormValue) => {
 		try {
 
-			await api(`api/recommendation`, {
+			const response = await api<ApiResponse<Kotha[]>>(`api/recommendation`, {
 				method: "POST",
 				body: JSON.stringify(data)
 			});
 
 			reset();
-			toast.success("Successfully added");
+
+			getRecommendedKotha(response.data.data)
 
 			// navigate('/account/posts')
 		} catch (error) {
