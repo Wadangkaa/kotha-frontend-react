@@ -55,7 +55,7 @@ const LoginPage = () => {
 
 				<div className="row">
 					<div className="col-xl-4 col-lg-6">
-						<div className="axil-signin-banner bg_image bg_image--9">
+						<div className="axil-signin-banner bg_image" style={ { backgroundColor: '#888' } }>
 							<h3 className="title">A room rental service</h3>
 						</div>
 					</div>

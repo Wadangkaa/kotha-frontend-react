@@ -5,7 +5,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useDispatch } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
-import { DevTool } from '@hookform/devtools'
 
 const RegisterUserSchema = z.object({
 	name: z.string().min(3, { message: "Name must be at least 3 characters long" }),
@@ -66,7 +65,7 @@ const RegisterPage = () => {
 
 				<div className="row">
 					<div className="col-xl-4 col-lg-6">
-						<div className="axil-signin-banner bg_image bg_image--10">
+						<div className="axil-signin-banner bg_image" style={ { backgroundColor: '#888' } }>
 							<h3 className="title">A room rental service</h3>
 						</div>
 					</div>
@@ -89,7 +88,6 @@ const RegisterPage = () => {
 									<div className="form-group">
 										<button type="submit" className="axil-btn btn-bg-primary submit-btn">Create Account</button>
 									</div>
-									<DevTool control={ control } />
 								</form>
 							</div>
 						</div>

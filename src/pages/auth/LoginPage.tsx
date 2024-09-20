@@ -4,7 +4,6 @@ import { useCustomForm } from '@/hooks/useCustomForm'
 import { Checkbox } from '@radix-ui/react-checkbox'
 import { Label } from '@radix-ui/react-label'
 import { z } from 'zod'
-import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useDispatch, useSelector } from 'react-redux'
 import { setAuth } from '@/redux/slices/authSlice'
@@ -64,7 +63,6 @@ const LoginPage = () => {
 					<Button className='tw-w-full'>Login</Button>
 				</form>
 
-				<DevTool control={ control } />
 			</div>
 		</>
 	)

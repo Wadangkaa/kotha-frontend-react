@@ -23,10 +23,10 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 				theme='light'
 			/>
 			<QueryClientProvider client={ queryClient }>
-				<ReactQueryDevtools
+				{/* <ReactQueryDevtools
 					initialIsOpen={ false }
 					position='bottom-right'
-				/>
+				/> */}
 				<Provider store={ store }>
 					<RouterProvider router={ router } />
 				</Provider>

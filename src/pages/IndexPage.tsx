@@ -14,6 +14,7 @@ import {
 import RecommendationForm from "@/components/RecommendationForm"
 import { setAuthRecommendedKothas } from "@/redux/slices/kothaSlice"
 import { useDispatch, useSelector } from "react-redux"
+import FadeLoader from "react-spinners/FadeLoader";
 
 const getKothas = async (): Promise<ApiResponseWithPagination<Kotha[]>> => {
 	return await apiFetch<ApiResponseWithPagination<Kotha[]>>('api/kotha')

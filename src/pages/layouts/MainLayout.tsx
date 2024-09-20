@@ -80,12 +80,12 @@ const MainLayout = () => {
 											<NavLink to={ `/search-in-map` }>
 												Search room in map
 											</NavLink>
-											<li className="shopping-cart">
+											{/* <li className="shopping-cart">
 												<a href="#" className="cart-dropdown-btn">
 													<span className="cart-count">2</span>
 													<i className="far fa-filter"></i>
 												</a>
-											</li>
+											</li> */}
 
 											<li className="my-account" onClick={ openMyAccountDropdown }>
 												<a href="#">

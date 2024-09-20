@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import Slider from "react-slick";
 import MapComponent from "@/components/MapComponent";
 import { title } from "process";
+import FadeLoader from "react-spinners/FadeLoader";
 
 
 const getKothaDetail = async (id: number): Promise<ApiResponse<KothaDetail>> => {
@@ -34,7 +35,15 @@ const KothaDetailPage = () => {
 	}, [id]);
 
 	if (!kotha) {
-		return <div>Loading...</div>;
+		return <div className="tw-flex tw-p-40 tw-justify-center">
+			<FadeLoader
+				color="#3577F0"
+				loading={ true }
+				aria-label="Loading Spinner"
+				data-testid="loader"
+			/>
+		</div>
+			;
 	}
 
 	return (

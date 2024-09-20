@@ -6,7 +6,6 @@ import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AdvancedMarker, APIProvider, Map } from '@vis.gl/react-google-maps'
 import { useEffect, useState } from 'react'
-import { DevTool } from '@hookform/devtools'
 import { toast } from 'sonner'
 import { useNavigate } from 'react-router-dom'
 
@@ -272,7 +271,6 @@ const KothaCreatePage = () => {
 								<input type="submit" value="Register" />
 							</div>
 						</div>
-						<DevTool control={ control } placement='top-right'></DevTool>
 					</form>
 				</div>
 			</div>
