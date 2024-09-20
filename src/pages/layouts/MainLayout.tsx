@@ -132,7 +132,7 @@ const MainLayout = () => {
 
 					<footer className="axil-footer-area footer-style-3 footer-dark">
 
-						<div className="footer-top">
+						{/* <div className="footer-top">
 							<div className="container">
 								<div className="footer-widget-warp">
 									<div className="row">
@@ -181,7 +181,7 @@ const MainLayout = () => {
 									</div>
 								</div>
 							</div>
-						</div>
+						</div> */}
 
 						<div className="copyright-area copyright-default">
 							<div className="container">
