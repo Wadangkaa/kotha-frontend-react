@@ -18,7 +18,7 @@ const LoginPage = () => {
 	const navigate = useNavigate()
 	const authStore = useSelector((state) => state.auth)
 
-	const { api, register, handleSubmit, errors, control } =
+	const { api, register, handleSubmit, errors, control, isDirty, isSubmitting } =
 		useCustomForm<LoginFormValue>({
 			resolver: zodResolver(LoginSchema),
 		})

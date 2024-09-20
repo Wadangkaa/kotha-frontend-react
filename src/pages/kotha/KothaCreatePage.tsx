@@ -8,8 +8,10 @@ import { AdvancedMarker, APIProvider, Map } from '@vis.gl/react-google-maps'
 import { useEffect, useState } from 'react'
 import { DevTool } from '@hookform/devtools'
 import { toast } from 'sonner'
+import { useNavigate } from 'react-router-dom'
 
 const KothaCreatePage = () => {
+	const navigate = useNavigate()
 	const [center, setCenter] = useState<google.maps.LatLngLiteral | null>(null);
 
 	useEffect(() => {
@@ -134,6 +136,8 @@ const KothaCreatePage = () => {
 
 			reset();
 			toast.success("Successfully added");
+
+			navigate('/account/posts')
 		} catch (error) {
 			toast.error("Failed to create kotha");
 		}

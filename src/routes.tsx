@@ -8,6 +8,8 @@ import SearchInRadius from './pages/map/SearchInRadius'
 import KothaCreatePage from './pages/kotha/KothaCreatePage'
 import AccountLayout from './pages/accounts/AccountLayout'
 import LogoutPage from './pages/LogoutPage'
+import DashboardPage from './pages/DashboardPage'
+import MyPostsPage from './pages/MyPostsPage'
 
 export const router = createBrowserRouter([
 	{
@@ -36,7 +38,11 @@ export const router = createBrowserRouter([
 				children: [
 					{
 						path: '',
-						element: <h1>hello</h1>
+						element: <DashboardPage />
+					},
+					{
+						path: 'posts',
+						element: <MyPostsPage />
 					},
 					{
 						path: 'create-kotha',
